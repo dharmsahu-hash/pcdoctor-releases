@@ -1,0 +1,22 @@
+name: Suggest a feature
+description: Ask for something new PCDoctor should do.
+title: "Idea: "
+labels: ["feature request"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Ideas from people who use PCDoctor shape what comes next. Others can add a 👍 to ideas they want too.
+        **Please do not include personal information.** This page is public.
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would you like PCDoctor to do?
+      placeholder: "Example: Remind me every month to clean up my Downloads folder."
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why would it help you? (optional)
+      placeholder: "Example: My Downloads folder fills drive C: and I always forget."

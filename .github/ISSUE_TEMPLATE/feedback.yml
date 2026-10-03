@@ -1,0 +1,43 @@
+name: Share feedback
+description: Tell us what you like, what is confusing, or what went wrong.
+title: "Feedback: "
+labels: ["feedback"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for trying PCDoctor! Every message is read.
+        **Please do not include personal information** such as file names, folders, passwords or keys. This page is public.
+  - type: dropdown
+    id: feeling
+    attributes:
+      label: How do you like PCDoctor so far?
+      options:
+        - Love it
+        - It's good
+        - It's OK
+        - Not for me
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: Your feedback
+      description: What worked well? What was hard to understand? Did anything go wrong?
+      placeholder: "Example: Free up space was easy, but I didn't understand the Activity screen."
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: PCDoctor version (optional)
+      description: Shown in PCDoctor under About.
+      placeholder: "0.7.0"
+  - type: dropdown
+    id: windows
+    attributes:
+      label: Windows version (optional)
+      options:
+        - Windows 11
+        - Windows 10
+        - Not sure
