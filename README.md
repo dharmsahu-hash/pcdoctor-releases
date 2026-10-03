@@ -1,4 +1,4 @@
-# PCDoctor by KnowledgeWala — downloads
+# PCDoctor by [KnowledgeWala](https://knowledgewala.com/?utm_source=pcdoctor&utm_medium=github&utm_campaign=cross_promo) — downloads
 
 PCDoctor explains in plain words why your Windows PC is slow, hot or full, and helps you fix it safely. Everything stays on your PC: no account, no tracking, no ads.
 
@@ -26,4 +26,11 @@ If you switch on **Check for updates** in PCDoctor's Settings, PCDoctor asks thi
 
 ---
 
-This repository holds installers and release notes only. © 2026 KnowledgeWala. All rights reserved. PCDoctor is free to use under its licence agreement, shown in the app's About screen.
+## More from KnowledgeWala
+
+- **[KnowledgeWala](https://knowledgewala.com/?utm_source=pcdoctor&utm_medium=github&utm_campaign=cross_promo)**: learning resources and free tools, from the makers of PCDoctor.
+- **[TeacherCircle](https://teacherscircle.co.in/?utm_source=pcdoctor&utm_medium=github&utm_campaign=cross_promo)**: find a teacher near you in India.
+
+Contact: [dknitk@gmail.com](mailto:dknitk@gmail.com?subject=PCDoctor)
+
+This repository holds installers and release notes only. © 2026 [KnowledgeWala](https://knowledgewala.com/?utm_source=pcdoctor&utm_medium=github&utm_campaign=cross_promo). All rights reserved. PCDoctor is free to use under its licence agreement, shown in the app's About screen.
