@@ -8,6 +8,10 @@ Open **[Releases](../../releases/latest)** and download `PCDoctor_<version>_x64-
 
 If Windows shows "Windows protected your PC", click **More info**, then **Run anyway**.
 
+📖 **[Read the user guide](GUIDE.md)**: install, every screen, how to switch the AI on or off (built-in or your own service), fixes with Confirm and Undo, privacy, and common questions. Written for everyone, with a section for technical readers.
+
+**New in 0.8.0:** the AI can offer a fix (clean up, or stop a program starting with Windows), and nothing changes until you press **Confirm**; **Undo** in Activity puts it back. Plus a **Thought for today** on the Dashboard: a new quote and PC care tip every day.
+
 ## Tell us what you think
 
 Your feedback and ideas decide what PCDoctor does next.
