@@ -51,7 +51,7 @@ PCDoctor looks at your PC, explains what it finds in one simple sentence, and of
 ## 3. Install in 1 minute
 
 1. Open the **[Releases page](https://github.com/dharmsahu-hash/pcdoctor-releases/releases/latest)**.
-2. Under **Assets**, click **`PCDoctor_0.8.2_x64-setup.exe`** (about 4 MB) to download it.
+2. Under **Assets**, click **`PCDoctor_0.9.0_x64-setup.exe`** (about 4 MB) to download it.
 3. Double-click the downloaded file.
 4. If Windows shows **"Windows protected your PC"**, click **More info**, then **Run anyway**. This message appears for new apps that are not yet code-signed; it is expected.
 5. Click **Next**, **Install**, **Finish**. No administrator password is needed.
@@ -77,6 +77,7 @@ PCDoctor opens, and you will find it in the Start menu under **PCDoctor**.
 | **My Library** | Every PDF, document, video, photo, music file, archive and installer on your drives in ready-made collections (or your own). Search, open, show in folder, or delete (to the Recycle Bin). Tick several files (Shift+click for a range) to delete them together. |
 | **Apps** | Installed apps labelled **Remove**, **Update** or **Keep**, and programs that start with Windows labelled **Stop at startup** or **Keep**, each with a reason. Buttons open the right Windows Settings page. |
 | **Activity** | Everything PCDoctor moved to the Recycle Bin or stopped starting with Windows in the last 90 days, with **Undo**. |
+| **Your data** | Everything PCDoctor keeps on your PC (history, My Library list, activity log, duplicate fingerprints, AI conversation), how much and why, with a **Delete** for each part and **Keep my AI conversation**. Open it from the privacy line at the top of every screen. |
 | **Settings** | The AI switches, Thought for today, Check for updates, privacy, and **Delete everything PCDoctor saved**. |
 | **About** | Version, privacy policy, licence, feedback buttons and contact. |
 | **Ask PCDoctor AI** | Ask questions about your PC in your own words (when the AI is on). |
@@ -85,7 +86,7 @@ PCDoctor opens, and you will find it in the Start menu under **PCDoctor**.
 
 ## 6. The AI assistant: on, off, or your own
 
-The AI is **optional and off until you switch it on**. PCDoctor works fully without it. You choose one of three ways, and you can change your mind at any time in **Settings → AI assistant**.
+The AI is **optional and off until you switch it on**. PCDoctor works fully without it. You choose one of three ways, and you can change your mind at any time: the **AI on / AI off** button at the top of every screen switches the built-in AI in one click (its files are kept, so switching on again is instant), and **Settings → AI assistant** has all the options.
 
 | Choice | How to choose it | What happens |
 |---|---|---|
@@ -149,6 +150,8 @@ Don't want it? Untick **Settings → Dashboard → Thought for today**. Tick it 
 - **Get told about updates (optional):** in **Settings → Updates**, switch on **Check for updates**. Once a day PCDoctor asks GitHub whether a newer version exists and shows a **Download** button. It never installs anything by itself.
 
 ## 10. Your privacy in one minute
+
+**Everything PCDoctor learns about your PC stays on your PC.** To see exactly what it keeps, click the privacy line at the top of any screen (or **Settings → Your data**): each kind of data is listed with how much is kept and why, and each has its own **Delete**. Switch **Keep my AI conversation** off there (or on the Ask screen) and your questions to the AI are kept in memory only and forgotten when PCDoctor closes.
 
 - PCDoctor reads how your PC is running (program names, memory, processor, disk space) and, for My Library, the names, sizes and dates of your files. **It never reads inside your files**, and never reads your browser, emails, chats or passwords.
 - **No account, no tracking, no ads, no telemetry.** We cannot see how many people use PCDoctor.
@@ -223,7 +226,7 @@ Links (KnowledgeWala, TeacherCircle, feedback, contact) open in your browser onl
 **Verify your download.** Compare the SHA-256 shown on the release page with:
 
 ```
-certutil -hashfile PCDoctor_0.8.2_x64-setup.exe SHA256
+certutil -hashfile PCDoctor_0.9.0_x64-setup.exe SHA256
 ```
 
 **Licences.** PCDoctor is free to use under its licence agreement (shown in About). Third-party notices (Tauri, React, llama.cpp, Qwen and others) are listed in full in the app's About screen.
