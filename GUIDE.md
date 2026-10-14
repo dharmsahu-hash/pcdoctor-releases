@@ -15,10 +15,11 @@ This guide has two parts. **Part 1** is for everyone and needs no technical know
   6. [The AI assistant: on, off, or your own](#6-the-ai-assistant-on-off-or-your-own)
   7. [Fixes with Confirm, and Undo](#7-fixes-with-confirm-and-undo)
   8. [Thought for today](#8-thought-for-today)
-  9. [Updating, and keeping your data](#9-updating-and-keeping-your-data)
-  10. [Your privacy in one minute](#10-your-privacy-in-one-minute)
-  11. [Questions and problems](#11-questions-and-problems)
-  12. [Removing PCDoctor](#12-removing-pcdoctor)
+  9. [Running in the tray, and starting with Windows](#9-running-in-the-tray-and-starting-with-windows)
+  10. [Updating, and keeping your data](#10-updating-and-keeping-your-data)
+  11. [Your privacy in one minute](#11-your-privacy-in-one-minute)
+  12. [Questions and problems](#12-questions-and-problems)
+  13. [Removing PCDoctor](#13-removing-pcdoctor)
 - [Part 2: for technical readers](#part-2-for-technical-readers)
 - [Feedback and contact](#feedback-and-contact)
 
@@ -51,7 +52,7 @@ PCDoctor looks at your PC, explains what it finds in one simple sentence, and of
 ## 3. Install in 1 minute
 
 1. Open the **[Releases page](https://github.com/dharmsahu-hash/pcdoctor-releases/releases/latest)**.
-2. Under **Assets**, click **`PCDoctor_0.9.0_x64-setup.exe`** (about 4 MB) to download it.
+2. Under **Assets**, click **`PCDoctor_0.10.0_x64-setup.exe`** (about 4 MB) to download it.
 3. Double-click the downloaded file.
 4. If Windows shows **"Windows protected your PC"**, click **More info**, then **Run anyway**. This message appears for new apps that are not yet code-signed; it is expected.
 5. Click **Next**, **Install**, **Finish**. No administrator password is needed.
@@ -76,9 +77,9 @@ PCDoctor opens, and you will find it in the Start menu under **PCDoctor**.
 | **Duplicates** | Finds files with exactly the same content. Under **Where to look**, press **Change** to add any folder or a whole drive (such as D:), remove one, or go back to the standard folders. Press **Find duplicates**; the search carries on in the background, and the last results show straight away next time. Tick the copies to delete yourself (Shift+click for a range), or let PCDoctor tick the extra copies in every group, keeping the suggested, newest or oldest one; then **Delete selected**. **The last copy can never be deleted.** |
 | **My Library** | Every PDF, document, video, photo, music file, archive and installer on your drives in ready-made collections (or your own). Search, open, show in folder, or delete (to the Recycle Bin). Tick several files (Shift+click for a range) to delete them together. |
 | **Apps** | Installed apps labelled **Remove**, **Update** or **Keep**, and programs that start with Windows labelled **Stop at startup** or **Keep**, each with a reason. Buttons open the right Windows Settings page. |
-| **Activity** | Everything PCDoctor moved to the Recycle Bin or stopped starting with Windows in the last 90 days, with **Undo**. |
+| **Activity** | Everything PCDoctor moved to the Recycle Bin or stopped starting with Windows in the last 90 days, and each time you switched **Start PCDoctor with Windows** on or off, with **Undo**. |
 | **Your data** | Everything PCDoctor keeps on your PC (history, My Library list, activity log, duplicate fingerprints, AI conversation), how much and why, with a **Delete** for each part and **Keep my AI conversation**. Open it from the privacy line at the top of every screen. |
-| **Settings** | The AI switches, Thought for today, Check for updates, privacy, and **Delete everything PCDoctor saved**. |
+| **Settings** | The AI switches, Thought for today, **Running in the background** (tray, Start with Windows, Pause readings), Check for updates, privacy, and **Delete everything PCDoctor saved**. |
 | **About** | Version, privacy policy, licence, feedback buttons and contact. |
 | **Ask PCDoctor AI** | Ask questions about your PC in your own words (when the AI is on). |
 
@@ -144,12 +145,28 @@ PCDoctor can switch off programs that start for **your** Windows account. Progra
 
 Don't want it? Untick **Settings → Dashboard → Thought for today**. Tick it again to bring it back.
 
-## 9. Updating, and keeping your data
+## 9. Running in the tray, and starting with Windows
+
+**New in 0.10.0.** PCDoctor can keep running quietly as a small icon in the **system tray**, the row of icons next to the clock (some hide under the **^** arrow). While it runs, it records how your PC is doing every 5 minutes, so the Dashboard charts and "At this rate, C: is full in…" have no gaps.
+
+- **The first time you close the window**, PCDoctor asks **Keep PCDoctor running in the tray?** Choose **Keep running in the tray**, **Quit PCDoctor** (closes completely, as before) or **Cancel**. It asks only once.
+- **Click the tray icon** to open PCDoctor again. **Point at it** to see the latest reading, for example "processor 12%, memory 38% used".
+- **Right-click the tray icon** for **Open PCDoctor**, **Pause readings** (or **Resume readings**) and **Quit PCDoctor**.
+- **Very light:** in the tray the window and the AI are closed, so their memory goes back to your PC. On our test PC it used no measurable processor time and about 40 MB of memory.
+- Opening PCDoctor from the Start menu while it is in the tray brings its window back; it never runs twice.
+
+Change any of this in **Settings → Running in the background**:
+
+- **Keep running in the tray when I close the window**: on or off.
+- **Start PCDoctor with Windows**: **off** unless you switch it on. When on, PCDoctor opens quietly in the tray when you sign in. It shows on the **Apps** screen and in Windows' own **Startup apps** like any other startup program, and each change is listed in **Activity** with **Undo**.
+- **Pause readings**: stops the 5-minute readings until you switch it off (the charts will have a gap for that time).
+
+## 10. Updating, and keeping your data
 
 - **To update:** download the newest installer from the Releases page and run it over the old one. **Your history, My Library, AI files, conversation and settings are kept.**
 - **Get told about updates (optional):** in **Settings → Updates**, switch on **Check for updates**. Once a day PCDoctor asks GitHub whether a newer version exists and shows a **Download** button. It never installs anything by itself.
 
-## 10. Your privacy in one minute
+## 11. Your privacy in one minute
 
 **Everything PCDoctor learns about your PC stays on your PC.** To see exactly what it keeps, click the privacy line at the top of any screen (or **Settings → Your data**): each kind of data is listed with how much is kept and why, and each has its own **Delete**. Switch **Keep my AI conversation** off there (or on the Ask screen) and your questions to the AI are kept in memory only and forgotten when PCDoctor closes.
 
@@ -159,7 +176,7 @@ Don't want it? Untick **Settings → Dashboard → Thought for today**. Tick it 
 - **Settings → Delete everything PCDoctor saved** wipes its history, My Library list and AI conversation.
 - The full privacy policy is in the app under **About**.
 
-## 11. Questions and problems
+## 12. Questions and problems
 
 **"Windows protected your PC" appears when installing.**
 Click **More info**, then **Run anyway**. New apps show this until they are code-signed.
@@ -183,15 +200,21 @@ No. Both carry on in the background while you use other screens; the screen says
 Yes. Open **Duplicates**, press **Change** under **Where to look**, then **Add drive D:** or **Add a folder…**. App data and, on whole drives, Windows' own folders (Windows, Program Files and similar) are always skipped, so nothing Windows needs is offered for deletion.
 
 **I cleaned something by mistake.**
-Open **Activity** and press **Undo**. This works as long as the files are still in the Recycle Bin (PCDoctor never empties it).
+Open **Activity** and press **Undo**. This works as long as the files are still in the Recycle Bin (PCDoctor never empties it). Afterwards **Free up space** (or **Duplicates**) says the clean-up was undone; close any result message with its **×**.
+
+**I closed PCDoctor but it is still running.**
+You chose **Keep running in the tray**. Right-click the PCDoctor icon next to the clock and choose **Quit PCDoctor**, or switch off **Settings → Running in the background → Keep running in the tray when I close the window**.
+
+**I can't see the tray icon.**
+Click the **^** arrow next to the clock; Windows hides some icons there. You can drag the PCDoctor icon next to the clock to keep it visible.
 
 **Is PCDoctor free?** Yes, free to download and use.
 
 **Does it work on Mac, Linux or phones?** Not yet. Tell us if you want it: [Suggest a feature](https://github.com/dharmsahu-hash/pcdoctor-releases/issues/new?template=feature-request.yml).
 
-## 12. Removing PCDoctor
+## 13. Removing PCDoctor
 
-Open Windows **Settings → Apps → Installed apps**, find **PCDoctor**, press the three dots, choose **Uninstall**. To also remove what it saved, first use **Settings → Delete everything PCDoctor saved** in PCDoctor (or delete the folder `%LOCALAPPDATA%\com.knowledgewala.pcdoctor`).
+If PCDoctor is in the tray, right-click its icon and choose **Quit PCDoctor** first. Then open Windows **Settings → Apps → Installed apps**, find **PCDoctor**, press the three dots, choose **Uninstall**. Uninstalling also removes **Start PCDoctor with Windows**. To also remove what it saved, first use **Settings → Delete everything PCDoctor saved** in PCDoctor (or delete the folder `%LOCALAPPDATA%\com.knowledgewala.pcdoctor`).
 
 ---
 
@@ -204,6 +227,8 @@ Open Windows **Settings → Apps → Installed apps**, find **PCDoctor**, press 
 **Agent tools.** The model may call `search_files` (My Library index: names, kinds, sizes, dates, drive letters, never folder paths), `space_by_type`, `pc_history`, `crashes` (Windows event log, Application Error/Hang, Kernel-Power 41), and `suggest_fix`. At most 3 tool rounds per question.
 
 **AI size (0.8.2).** `recommended(memory, graphics memory)`; graphics memory comes from Windows' display-adapter registry entry (`HardwareInformation.qwMemorySize`) before any download. All three models are pinned by size and SHA-256 (lmstudio-community Q4_K_M GGUF on huggingface.co, Apache 2.0). Answers pass two guards for every size: uninstall advice that names a running program, a browser or PCDoctor is replaced with safe steps, and a Confirm card only shows when the answer speaks of it.
+
+**Tray and Start with Windows (0.10.0).** Closing the window to the tray destroys it (not just hides it), so WebView2 and the AI engine release their memory; only the 5-minute reading thread and the 6-hourly My Library check keep running, and the window is rebuilt when opened. A single-instance lock (Tauri's official plugin) hands a second launch to the running copy. **Start PCDoctor with Windows** writes one value, `PCDoctor` = `"<install path>\pcdoctor.exe" --tray`, under `HKCU\Software\Microsoft\Windows\CurrentVersion\Run`; switching it off deletes that value and its `StartupApproved` note, and a real uninstall removes both (an update keeps them). Measured with the release build: 0% CPU over 30 s and 29–40 MB working set in the tray.
 
 **Background jobs (0.8.1).** Cleaning and the duplicate search run on their own thread, one of each at a time, and the window reads their state (step, count, result) whenever the screen is shown, so leaving a screen never stops or loses a job.
 
@@ -219,14 +244,14 @@ Open Windows **Settings → Apps → Installed apps**, find **PCDoctor**, press 
 
 Links (KnowledgeWala, TeacherCircle, feedback, contact) open in your browser only when clicked, with `utm_source=pcdoctor` and nothing else.
 
-**Data on disk.** `%LOCALAPPDATA%\com.knowledgewala.pcdoctor\`: `pcdoctor.db` (history every 5 minutes while open, kept 90 days; My Library index; duplicate-search fingerprints (path, size, date and a BLAKE3 hash, forgotten after 30 days unseen), chosen folders and last results; activity log, 90 days), `ai\` (engine, model, `conversation.json` with the last 100 messages, `pc-context.md`, `insight.json`, `online-ai.json`), `update.json`. Own-service keys are stored in Windows Credential Manager (service name "PCDoctor online AI"). Before anything reaches an AI, the Windows user name and email-like strings are masked.
+**Data on disk.** `%LOCALAPPDATA%\com.knowledgewala.pcdoctor\`: `pcdoctor.db` (history every 5 minutes while open or in the tray, kept 90 days; My Library index; duplicate-search fingerprints (path, size, date and a BLAKE3 hash, forgotten after 30 days unseen), chosen folders and last results; activity log, 90 days), `ai\` (engine, model, `conversation.json` with the last 100 messages, `pc-context.md`, `insight.json`, `online-ai.json`), `update.json`. Own-service keys are stored in Windows Credential Manager (service name "PCDoctor online AI"). Before anything reaches an AI, the Windows user name and email-like strings are masked.
 
-**Quality.** Each release passes `npm audit`, TypeScript checks, 110 screen tests, 176 Rust unit tests and 4 network-guard tests, `cargo clippy -D warnings` and `cargo audit` in CI, plus real-PC tests on Windows 11 with the real AI, Recycle Bin and event log.
+**Quality.** Each release passes `npm audit`, TypeScript checks, 143 screen tests, 198 Rust unit tests and 4 network-guard tests, `cargo clippy -D warnings` and `cargo audit` in CI, plus real-PC tests on Windows 11 with the real AI, Recycle Bin and event log.
 
 **Verify your download.** Compare the SHA-256 shown on the release page with:
 
 ```
-certutil -hashfile PCDoctor_0.9.0_x64-setup.exe SHA256
+certutil -hashfile PCDoctor_0.10.0_x64-setup.exe SHA256
 ```
 
 **Licences.** PCDoctor is free to use under its licence agreement (shown in About). Third-party notices (Tauri, React, llama.cpp, Qwen and others) are listed in full in the app's About screen.
