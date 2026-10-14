@@ -53,7 +53,7 @@ PCDoctor looks at your PC, explains what it finds in one simple sentence, and of
 ## 3. Install in 1 minute
 
 1. Open the **[Releases page](https://github.com/dharmsahu-hash/pcdoctor-releases/releases/latest)**.
-2. Under **Assets**, click **`PCDoctor_0.11.0_x64-setup.exe`** (about 4 MB) to download it.
+2. Under **Assets**, click **`PCDoctor_0.11.1_x64-setup.exe`** (about 4 MB) to download it.
 3. Double-click the downloaded file.
 4. If Windows shows **"Windows protected your PC"**, click **More info**, then **Run anyway**. This message appears for new apps that are not yet code-signed; it is expected.
 5. Click **Next**, **Install**, **Finish**. No administrator password is needed.
@@ -137,6 +137,7 @@ AI answers are suggestions and can be wrong. The AI can never change your PC by 
 - When you press **Confirm**, PCDoctor checks everything again first. Cleaning moves files to the Recycle Bin. Stopping a program switches it off at startup the same way Windows Settings does; **the program is not uninstalled**.
 - Afterwards the card says what was done, with a link to **Activity**.
 - In **Activity**, press **Undo**: files go back where they were, or the program starts with Windows again.
+- Activity checks the Recycle Bin when you open it (since 0.11.1). If it was emptied, the entry says **No longer in the Recycle Bin** and has no Undo button; if only some files are left, it says how many, for example *"12 of 34 files are still in the Recycle Bin"*.
 
 PCDoctor can switch off programs that start for **your** Windows account. Programs set up for every user of the PC need an administrator, so for those the AI gives you the steps for Windows Settings instead.
 
@@ -214,7 +215,7 @@ No. Both carry on in the background while you use other screens; the screen says
 Yes. Open **Duplicates**, press **Change** under **Where to look**, then **Add drive D:** or **Add a folder…**. App data and, on whole drives, Windows' own folders (Windows, Program Files and similar) are always skipped, so nothing Windows needs is offered for deletion.
 
 **I cleaned something by mistake.**
-Open **Activity** and press **Undo**. This works as long as the files are still in the Recycle Bin (PCDoctor never empties it). Afterwards **Free up space** (or **Duplicates**) says the clean-up was undone; close any result message with its **×**.
+Open **Activity** and press **Undo**. This works as long as the files are still in the Recycle Bin (PCDoctor never empties it). If you emptied it, Activity says **No longer in the Recycle Bin** and those files cannot come back. Afterwards **Free up space** (or **Duplicates**) says the clean-up was undone; close any result message with its **×**.
 
 **I closed PCDoctor but it is still running.**
 You chose **Keep running in the tray**. Right-click the PCDoctor icon next to the clock and choose **Quit PCDoctor**, or switch off **Settings → Running in the background → Keep running in the tray when I close the window**.
@@ -251,6 +252,8 @@ If PCDoctor is in the tray, right-click its icon and choose **Quit PCDoctor** fi
 
 **Background jobs (0.8.1).** Cleaning and the duplicate search run on their own thread, one of each at a time, and the window reads their state (step, count, result) whenever the screen is shown, so leaving a screen never stops or loses a job.
 
+**Activity and the Recycle Bin (0.11.1).** When the Activity screen opens, `activity_list` reads the Recycle Bin once and counts, per entry, the files still there with the same matching as Undo (same original place, deleted within 15 minutes of the logged time; indexed by folder and name, 2,000 items in about 3 ms). An Undo that brings nothing back no longer marks the entry undone. 0.11.1 also updates rustls to 0.23.46 (RUSTSEC-2026-0346 to 0349).
+
 **Proposed fixes (0.8.0).** `suggest_fix` only builds a proposal (`kind` + `items`), which PCDoctor validates against the live PC before showing it. On **Confirm**, `apply_fix` re-validates from scratch: cleaning rescans the fixed Free up space folders (direct children only, symlinks never followed) and sends items to the Recycle Bin; startup switching writes Windows' own `StartupApproved` value (`03 00 00 00` + FILETIME for off, `02` + 11 zero bytes for on) under `HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\StartupApproved\{Run,StartupFolder}`, only for entries in `HKCU\...\Run` and the user's Startup folder. The Run entry itself is never touched. Every change is written to the activity log for Undo. If the model mentions Confirm without a valid proposal, that sentence is removed.
 
 **Network.** The window's Content Security Policy allows no remote connections. The Rust core may connect only from three modules, each with a fixed host allow-list, and a build-time test (`network_guard`) fails the build if any other file uses a network library or names another host:
@@ -265,12 +268,12 @@ Links (KnowledgeWala, TeacherCircle, feedback, contact) open in your browser onl
 
 **Data on disk.** `%LOCALAPPDATA%\com.knowledgewala.pcdoctor\`: `pcdoctor.db` (history every 5 minutes while open or in the tray, including graphics card use, temperatures and minutes slowed down to stay cool, kept 90 days; My Library index; duplicate-search fingerprints (path, size, date and a BLAKE3 hash, forgotten after 30 days unseen), chosen folders and last results; activity log, 90 days), `ai\` (engine, model, `conversation.json` with the last 100 messages, `pc-context.md`, `insight.json`, `online-ai.json`), `update.json`. Own-service keys are stored in Windows Credential Manager (service name "PCDoctor online AI"). Before anything reaches an AI, the Windows user name and email-like strings are masked.
 
-**Quality.** Each release passes `npm audit`, TypeScript checks, 148 screen tests, 207 Rust unit tests and 4 network-guard tests, `cargo clippy -D warnings` and `cargo audit` in CI, plus real-PC tests on Windows 11 with the real AI, Recycle Bin and event log.
+**Quality.** Each release passes `npm audit`, TypeScript checks, 150 screen tests, 209 Rust unit tests and 4 network-guard tests, `cargo clippy -D warnings` and `cargo audit` in CI, plus real-PC tests on Windows 11 with the real AI, Recycle Bin and event log.
 
 **Verify your download.** Compare the SHA-256 shown on the release page with:
 
 ```
-certutil -hashfile PCDoctor_0.11.0_x64-setup.exe SHA256
+certutil -hashfile PCDoctor_0.11.1_x64-setup.exe SHA256
 ```
 
 **Licences.** PCDoctor is free to use under its licence agreement (shown in About). Third-party notices (Tauri, React, llama.cpp, Qwen and others) are listed in full in the app's About screen.
