@@ -16,6 +16,7 @@ This guide has two parts. **Part 1** is for everyone and needs no technical know
   7. [Fixes with Confirm, and Undo](#7-fixes-with-confirm-and-undo)
   8. [Thought for today](#8-thought-for-today)
   9. [Running in the tray, and starting with Windows](#9-running-in-the-tray-and-starting-with-windows)
+  - [Mini monitor and temperatures](#9b-mini-monitor-and-temperatures)
   10. [Updating, and keeping your data](#10-updating-and-keeping-your-data)
   11. [Your privacy in one minute](#11-your-privacy-in-one-minute)
   12. [Questions and problems](#12-questions-and-problems)
@@ -52,7 +53,7 @@ PCDoctor looks at your PC, explains what it finds in one simple sentence, and of
 ## 3. Install in 1 minute
 
 1. Open the **[Releases page](https://github.com/dharmsahu-hash/pcdoctor-releases/releases/latest)**.
-2. Under **Assets**, click **`PCDoctor_0.10.0_x64-setup.exe`** (about 4 MB) to download it.
+2. Under **Assets**, click **`PCDoctor_0.11.0_x64-setup.exe`** (about 4 MB) to download it.
 3. Double-click the downloaded file.
 4. If Windows shows **"Windows protected your PC"**, click **More info**, then **Run anyway**. This message appears for new apps that are not yet code-signed; it is expected.
 5. Click **Next**, **Install**, **Finish**. No administrator password is needed.
@@ -71,8 +72,8 @@ PCDoctor opens, and you will find it in the Start menu under **PCDoctor**.
 
 | Screen | What it does for you |
 |---|---|
-| **Dashboard** | Your PC at a glance: health, free space, memory and processor, every drive, the biggest programs right now, history charts, when a drive will be full at the current rate, what fills your disks, which programs crashed recently, and the **This week on your PC** summary. |
-| **Slow or hot?** | Press **Check my PC** for the main causes in plain words, for example a program crashing in a loop, a nearly full drive, or memory under pressure. **Show details** reveals the technical part. |
+| **Dashboard** | Your PC at a glance: health, free space, memory and processor, every drive, the biggest programs right now, history charts, when a drive will be full at the current rate, what fills your disks, which programs crashed recently, and the **This week on your PC** summary. **Open the mini monitor** (under the tiles) opens a small always-on-top window with processor, memory, graphics card and temperatures. |
+| **Slow or hot?** | Press **Check my PC** for the main causes in plain words, for example a program crashing in a loop, a nearly full drive, or memory under pressure, or that the PC slowed itself down to stay cool for a long time today. **Show details** reveals the technical part. |
 | **Free up space** | Lists temporary files, old crash reports, graphics card cache, app download leftovers and old installers, with sizes. Tick and **Clean**: they go to the Recycle Bin. Cleaning carries on in the background, so you don't need to wait on this screen: it shows **Cleaning is in progress** with a count, and the result when it is done. |
 | **Duplicates** | Finds files with exactly the same content. Under **Where to look**, press **Change** to add any folder or a whole drive (such as D:), remove one, or go back to the standard folders. Press **Find duplicates**; the search carries on in the background, and the last results show straight away next time. Tick the copies to delete yourself (Shift+click for a range), or let PCDoctor tick the extra copies in every group, keeping the suggested, newest or oldest one; then **Delete selected**. **The last copy can never be deleted.** |
 | **My Library** | Every PDF, document, video, photo, music file, archive and installer on your drives in ready-made collections (or your own). Search, open, show in folder, or delete (to the Recycle Bin). Tick several files (Shift+click for a range) to delete them together. |
@@ -151,7 +152,7 @@ Don't want it? Untick **Settings → Dashboard → Thought for today**. Tick it 
 
 - **The first time you close the window**, PCDoctor asks **Keep PCDoctor running in the tray?** Choose **Keep running in the tray**, **Quit PCDoctor** (closes completely, as before) or **Cancel**. It asks only once.
 - **Click the tray icon** to open PCDoctor again. **Point at it** to see the latest reading, for example "processor 12%, memory 38% used".
-- **Right-click the tray icon** for **Open PCDoctor**, **Pause readings** (or **Resume readings**) and **Quit PCDoctor**.
+- **Right-click the tray icon** for **Open PCDoctor**, **Mini monitor**, **Pause readings** (or **Resume readings**) and **Quit PCDoctor**.
 - **Very light:** in the tray the window and the AI are closed, so their memory goes back to your PC. On our test PC it used no measurable processor time and about 40 MB of memory.
 - Opening PCDoctor from the Start menu while it is in the tray brings its window back; it never runs twice.
 
@@ -160,6 +161,19 @@ Change any of this in **Settings → Running in the background**:
 - **Keep running in the tray when I close the window**: on or off.
 - **Start PCDoctor with Windows**: **off** unless you switch it on. When on, PCDoctor opens quietly in the tray when you sign in. It shows on the **Apps** screen and in Windows' own **Startup apps** like any other startup program, and each change is listed in **Activity** with **Undo**.
 - **Pause readings**: stops the 5-minute readings until you switch it off (the charts will have a gap for that time).
+
+## 9b. Mini monitor and temperatures
+
+**New in 0.11.0.** The **mini monitor** is a small window that stays on top of your other apps. Open it from the Dashboard (**Open the mini monitor**, under the tiles) or by right-clicking the PCDoctor icon next to the clock and choosing **Mini monitor**. Every 2 seconds it shows:
+
+- **Processor**, **Memory** and **Graphics card**: how busy each one is, counted the way Task Manager counts it.
+- **Graphics card temperature**: on PCs with an NVIDIA graphics card, from NVIDIA's own driver.
+- **PC temperature**: from Windows' own temperature sensor, shown once PCDoctor has seen it change (some PCs report a fixed, made-up value there).
+- **Slowing down to stay cool**: shown only while Windows is holding the PC back because it is too hot.
+
+Where there is no real sensor it says **Not available on this PC**; PCDoctor never guesses a temperature and installs no extra driver to read one. Close the mini monitor with its **×**; PCDoctor keeps running.
+
+**Overheating advice.** PCDoctor counts the minutes your PC slows itself down to stay cool. If that adds up to 10 minutes or more in the last 24 hours, **Slow or hot?** says so, for example *"Your PC slowed itself down to stay cool for 42 minutes in the last 24 hours"*, with simple steps: shut the PC down and blow the dust out of the vents and fan, use a laptop on a hard, flat surface, and have the fan checked if it keeps happening.
 
 ## 10. Updating, and keeping your data
 
@@ -208,6 +222,9 @@ You chose **Keep running in the tray**. Right-click the PCDoctor icon next to th
 **I can't see the tray icon.**
 Click the **^** arrow next to the clock; Windows hides some icons there. You can drag the PCDoctor icon next to the clock to keep it visible.
 
+**The mini monitor says "Not available on this PC" for a temperature.**
+Your PC has no sensor PCDoctor can read safely. Graphics card temperature is read on NVIDIA cards only, and the PC temperature only when Windows reports a real, changing value. PCDoctor does not install the extra drivers other tools use, because Microsoft Defender flags them.
+
 **Is PCDoctor free?** Yes, free to download and use.
 
 **Does it work on Mac, Linux or phones?** Not yet. Tell us if you want it: [Suggest a feature](https://github.com/dharmsahu-hash/pcdoctor-releases/issues/new?template=feature-request.yml).
@@ -228,6 +245,8 @@ If PCDoctor is in the tray, right-click its icon and choose **Quit PCDoctor** fi
 
 **AI size (0.8.2).** `recommended(memory, graphics memory)`; graphics memory comes from Windows' display-adapter registry entry (`HardwareInformation.qwMemorySize`) before any download. All three models are pinned by size and SHA-256 (lmstudio-community Q4_K_M GGUF on huggingface.co, Apache 2.0). Answers pass two guards for every size: uninstall advice that names a running program, a browser or PCDoctor is replaced with safe steps, and a Confirm card only shows when the answer speaks of it.
 
+**Mini monitor and heat (0.11.0).** `monitor.rs` samples every 30 s, or every 2 s while the mini monitor is open, through pdh.dll: Processor Information `% Processor Utility`; `GPU Engine(*)\Utilization Percentage` summed per engine across processes, then the busiest engine per adapter and the busiest adapter (as Task Manager); Thermal Zone `High Precision Temperature` (tenths of a kelvin) and `% Passive Limit`. On NVIDIA cards `nvml.dll` is loaded from System32 only, for temperature and the software/hardware thermal slowdown reasons. A thermal zone counts once its value has changed and stays between 15 and 115 °C. Slowed time (passive limit below 100%, or NVML thermal slowdown) and maximum temperatures go into the `heat_reading` history table with each 5-minute reading; the advisor rule `heat:slowed` fires at 10 minutes in 24 hours. Measured with the release build on a Core i9-9880H with a GTX 1650 Max-Q: about 0.09% of the processor at the 2-second pace.
+
 **Tray and Start with Windows (0.10.0).** Closing the window to the tray destroys it (not just hides it), so WebView2 and the AI engine release their memory; only the 5-minute reading thread and the 6-hourly My Library check keep running, and the window is rebuilt when opened. A single-instance lock (Tauri's official plugin) hands a second launch to the running copy. **Start PCDoctor with Windows** writes one value, `PCDoctor` = `"<install path>\pcdoctor.exe" --tray`, under `HKCU\Software\Microsoft\Windows\CurrentVersion\Run`; switching it off deletes that value and its `StartupApproved` note, and a real uninstall removes both (an update keeps them). Measured with the release build: 0% CPU over 30 s and 29–40 MB working set in the tray.
 
 **Background jobs (0.8.1).** Cleaning and the duplicate search run on their own thread, one of each at a time, and the window reads their state (step, count, result) whenever the screen is shown, so leaving a screen never stops or loses a job.
@@ -244,14 +263,14 @@ If PCDoctor is in the tray, right-click its icon and choose **Quit PCDoctor** fi
 
 Links (KnowledgeWala, TeacherCircle, feedback, contact) open in your browser only when clicked, with `utm_source=pcdoctor` and nothing else.
 
-**Data on disk.** `%LOCALAPPDATA%\com.knowledgewala.pcdoctor\`: `pcdoctor.db` (history every 5 minutes while open or in the tray, kept 90 days; My Library index; duplicate-search fingerprints (path, size, date and a BLAKE3 hash, forgotten after 30 days unseen), chosen folders and last results; activity log, 90 days), `ai\` (engine, model, `conversation.json` with the last 100 messages, `pc-context.md`, `insight.json`, `online-ai.json`), `update.json`. Own-service keys are stored in Windows Credential Manager (service name "PCDoctor online AI"). Before anything reaches an AI, the Windows user name and email-like strings are masked.
+**Data on disk.** `%LOCALAPPDATA%\com.knowledgewala.pcdoctor\`: `pcdoctor.db` (history every 5 minutes while open or in the tray, including graphics card use, temperatures and minutes slowed down to stay cool, kept 90 days; My Library index; duplicate-search fingerprints (path, size, date and a BLAKE3 hash, forgotten after 30 days unseen), chosen folders and last results; activity log, 90 days), `ai\` (engine, model, `conversation.json` with the last 100 messages, `pc-context.md`, `insight.json`, `online-ai.json`), `update.json`. Own-service keys are stored in Windows Credential Manager (service name "PCDoctor online AI"). Before anything reaches an AI, the Windows user name and email-like strings are masked.
 
-**Quality.** Each release passes `npm audit`, TypeScript checks, 143 screen tests, 198 Rust unit tests and 4 network-guard tests, `cargo clippy -D warnings` and `cargo audit` in CI, plus real-PC tests on Windows 11 with the real AI, Recycle Bin and event log.
+**Quality.** Each release passes `npm audit`, TypeScript checks, 148 screen tests, 207 Rust unit tests and 4 network-guard tests, `cargo clippy -D warnings` and `cargo audit` in CI, plus real-PC tests on Windows 11 with the real AI, Recycle Bin and event log.
 
 **Verify your download.** Compare the SHA-256 shown on the release page with:
 
 ```
-certutil -hashfile PCDoctor_0.10.0_x64-setup.exe SHA256
+certutil -hashfile PCDoctor_0.11.0_x64-setup.exe SHA256
 ```
 
 **Licences.** PCDoctor is free to use under its licence agreement (shown in About). Third-party notices (Tauri, React, llama.cpp, Qwen and others) are listed in full in the app's About screen.
