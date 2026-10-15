@@ -53,7 +53,7 @@ PCDoctor looks at your PC, explains what it finds in one simple sentence, and of
 ## 3. Install in 1 minute
 
 1. Open the **[Releases page](https://github.com/dharmsahu-hash/pcdoctor-releases/releases/latest)**.
-2. Under **Assets**, click **`PCDoctor_0.11.1_x64-setup.exe`** (about 4 MB) to download it.
+2. Under **Assets**, click **`PCDoctor_0.11.2_x64-setup.exe`** (about 4 MB) to download it.
 3. Double-click the downloaded file.
 4. If Windows shows **"Windows protected your PC"**, click **More info**, then **Run anyway**. This message appears for new apps that are not yet code-signed; it is expected.
 5. Click **Next**, **Install**, **Finish**. No administrator password is needed.
@@ -76,7 +76,7 @@ PCDoctor opens, and you will find it in the Start menu under **PCDoctor**.
 | **Slow or hot?** | Press **Check my PC** for the main causes in plain words, for example a program crashing in a loop, a nearly full drive, or memory under pressure, or that the PC slowed itself down to stay cool for a long time today. **Show details** reveals the technical part. |
 | **Free up space** | Lists temporary files, old crash reports, graphics card cache, app download leftovers and old installers, with sizes. Tick and **Clean**: they go to the Recycle Bin. Cleaning carries on in the background, so you don't need to wait on this screen: it shows **Cleaning is in progress** with a count, and the result when it is done. |
 | **Duplicates** | Finds files with exactly the same content. Under **Where to look**, press **Change** to add any folder or a whole drive (such as D:), remove one, or go back to the standard folders. Press **Find duplicates**; the search carries on in the background, and the last results show straight away next time. Tick the copies to delete yourself (Shift+click for a range), or let PCDoctor tick the extra copies in every group, keeping the suggested, newest or oldest one; then **Delete selected**. **The last copy can never be deleted.** |
-| **My Library** | Every PDF, document, video, photo, music file, archive and installer on your drives in ready-made collections (or your own). Search, open, show in folder, or delete (to the Recycle Bin). Tick several files (Shift+click for a range) to delete them together. |
+| **My Library** | Every PDF, document, video, photo, music file, archive and installer on your drives in ready-made collections (or your own). Search, open, show in folder, or delete (to the Recycle Bin). Tick several files (Shift+click for a range) to delete them together. In your own collections, **Bigger than (MB)** takes up to 10,000,000 MB and **Changed in the last (days)** up to 36,500 days, digits only. |
 | **Apps** | Installed apps labelled **Remove**, **Update** or **Keep**, and programs that start with Windows labelled **Stop at startup** or **Keep**, each with a reason. Buttons open the right Windows Settings page. |
 | **Activity** | Everything PCDoctor moved to the Recycle Bin or stopped starting with Windows in the last 90 days, and each time you switched **Start PCDoctor with Windows** on or off, with **Undo**. |
 | **Your data** | Everything PCDoctor keeps on your PC (history, My Library list, activity log, duplicate fingerprints, AI conversation), how much and why, with a **Delete** for each part and **Keep my AI conversation**. Open it from the privacy line at the top of every screen. |
@@ -252,6 +252,8 @@ If PCDoctor is in the tray, right-click its icon and choose **Quit PCDoctor** fi
 
 **Background jobs (0.8.1).** Cleaning and the duplicate search run on their own thread, one of each at a time, and the window reads their state (step, count, result) whenever the screen is shown, so leaving a screen never stops or loses a job.
 
+**Collection rules (0.11.2).** Size and age limits are computed with saturating arithmetic, clamped to `i64::MAX`, so a huge size matches no file (before 0.11.2, `(mb * 1 MiB) as i64` could wrap negative and match every file). The form accepts digits only and disables Save above 10,000,000 MB or 36,500 days.
+
 **Activity and the Recycle Bin (0.11.1).** When the Activity screen opens, `activity_list` reads the Recycle Bin once and counts, per entry, the files still there with the same matching as Undo (same original place, deleted within 15 minutes of the logged time; indexed by folder and name, 2,000 items in about 3 ms). An Undo that brings nothing back no longer marks the entry undone. 0.11.1 also updates rustls to 0.23.46 (RUSTSEC-2026-0346 to 0349).
 
 **Proposed fixes (0.8.0).** `suggest_fix` only builds a proposal (`kind` + `items`), which PCDoctor validates against the live PC before showing it. On **Confirm**, `apply_fix` re-validates from scratch: cleaning rescans the fixed Free up space folders (direct children only, symlinks never followed) and sends items to the Recycle Bin; startup switching writes Windows' own `StartupApproved` value (`03 00 00 00` + FILETIME for off, `02` + 11 zero bytes for on) under `HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\StartupApproved\{Run,StartupFolder}`, only for entries in `HKCU\...\Run` and the user's Startup folder. The Run entry itself is never touched. Every change is written to the activity log for Undo. If the model mentions Confirm without a valid proposal, that sentence is removed.
@@ -268,12 +270,12 @@ Links (KnowledgeWala, TeacherCircle, feedback, contact) open in your browser onl
 
 **Data on disk.** `%LOCALAPPDATA%\com.knowledgewala.pcdoctor\`: `pcdoctor.db` (history every 5 minutes while open or in the tray, including graphics card use, temperatures and minutes slowed down to stay cool, kept 90 days; My Library index; duplicate-search fingerprints (path, size, date and a BLAKE3 hash, forgotten after 30 days unseen), chosen folders and last results; activity log, 90 days), `ai\` (engine, model, `conversation.json` with the last 100 messages, `pc-context.md`, `insight.json`, `online-ai.json`), `update.json`. Own-service keys are stored in Windows Credential Manager (service name "PCDoctor online AI"). Before anything reaches an AI, the Windows user name and email-like strings are masked.
 
-**Quality.** Each release passes `npm audit`, TypeScript checks, 150 screen tests, 209 Rust unit tests and 4 network-guard tests, `cargo clippy -D warnings` and `cargo audit` in CI, plus real-PC tests on Windows 11 with the real AI, Recycle Bin and event log.
+**Quality.** Each release passes `npm audit`, TypeScript checks, 152 screen tests, 210 Rust unit tests and 4 network-guard tests, `cargo clippy -D warnings` and `cargo audit` in CI, plus real-PC tests on Windows 11 with the real AI, Recycle Bin and event log.
 
 **Verify your download.** Compare the SHA-256 shown on the release page with:
 
 ```
-certutil -hashfile PCDoctor_0.11.1_x64-setup.exe SHA256
+certutil -hashfile PCDoctor_0.11.2_x64-setup.exe SHA256
 ```
 
 **Licences.** PCDoctor is free to use under its licence agreement (shown in About). Third-party notices (Tauri, React, llama.cpp, Qwen and others) are listed in full in the app's About screen.
