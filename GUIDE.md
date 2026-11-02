@@ -17,6 +17,7 @@ This guide has two parts. **Part 1** is for everyone and needs no technical know
   8. [Thought for today](#8-thought-for-today)
   9. [Running in the tray, and starting with Windows](#9-running-in-the-tray-and-starting-with-windows)
   - [Mini monitor and temperatures](#9b-mini-monitor-and-temperatures)
+  - [Reminders and notifications](#9c-reminders-and-notifications)
   10. [Updating, and keeping your data](#10-updating-and-keeping-your-data)
   11. [Your privacy in one minute](#11-your-privacy-in-one-minute)
   12. [Questions and problems](#12-questions-and-problems)
@@ -53,7 +54,7 @@ PCDoctor looks at your PC, explains what it finds in one simple sentence, and of
 ## 3. Install in 1 minute
 
 1. Open the **[Releases page](https://github.com/dharmsahu-hash/pcdoctor-releases/releases/latest)**.
-2. Under **Assets**, click **`PCDoctor_0.11.2_x64-setup.exe`** (about 4 MB) to download it.
+2. Under **Assets**, click **`PCDoctor_0.12.0_x64-setup.exe`** (about 4 MB) to download it.
 3. Double-click the downloaded file.
 4. If Windows shows **"Windows protected your PC"**, click **More info**, then **Run anyway**. This message appears for new apps that are not yet code-signed; it is expected.
 5. Click **Next**, **Install**, **Finish**. No administrator password is needed.
@@ -79,10 +80,12 @@ PCDoctor opens, and you will find it in the Start menu under **PCDoctor**.
 | **My Library** | Every PDF, document, video, photo, music file, archive and installer on your drives in ready-made collections (or your own). Search, open, show in folder, or delete (to the Recycle Bin). Tick several files (Shift+click for a range) to delete them together. In your own collections, **Bigger than (MB)** takes up to 10,000,000 MB and **Changed in the last (days)** up to 36,500 days, digits only. |
 | **Apps** | Installed apps labelled **Remove**, **Update** or **Keep**, and programs that start with Windows labelled **Stop at startup** or **Keep**, each with a reason. Buttons open the right Windows Settings page. |
 | **Activity** | Everything PCDoctor moved to the Recycle Bin or stopped starting with Windows in the last 90 days, and each time you switched **Start PCDoctor with Windows** on or off, with **Undo**. |
-| **Your data** | Everything PCDoctor keeps on your PC (history, My Library list, activity log, duplicate fingerprints, AI conversation), how much and why, with a **Delete** for each part and **Keep my AI conversation**. Open it from the privacy line at the top of every screen. |
-| **Settings** | The AI switches, Thought for today, **Running in the background** (tray, Start with Windows, Pause readings), Check for updates, privacy, and **Delete everything PCDoctor saved**. |
+| **Your data** | Everything PCDoctor keeps on your PC (history, My Library list, activity log, duplicate fingerprints, reminders and notifications, AI conversation), how much and why, with a **Delete** for each part and **Keep my AI conversation**. Open it from the privacy line at the top of every screen. |
+| **Settings** | The AI switches, Thought for today, **Reminders and notifications**, **Running in the background** (tray, Start with Windows, Pause readings), Check for updates, privacy, and **Delete everything PCDoctor saved**. |
 | **About** | Version, privacy policy, licence, feedback buttons and contact. |
 | **Ask PCDoctor AI** | Ask questions about your PC in your own words (when the AI is on). |
+
+The **bell** at the top of every screen shows your reminders and PC care alerts; see [Reminders and notifications](#9c-reminders-and-notifications).
 
 **Explain** buttons appear beside findings, crashes, apps and startup items when the AI is on: press one to get that item explained in place.
 
@@ -176,6 +179,17 @@ Where there is no real sensor it says **Not available on this PC**; PCDoctor nev
 
 **Overheating advice.** PCDoctor counts the minutes your PC slows itself down to stay cool. If that adds up to 10 minutes or more in the last 24 hours, **Slow or hot?** says so, for example *"Your PC slowed itself down to stay cool for 42 minutes in the last 24 hours"*, with simple steps: shut the PC down and blow the dust out of the vents and fan, use a laptop on a hard, flat surface, and have the fan checked if it keeps happening.
 
+## 9c. Reminders and notifications
+
+**New in 0.12.0.** PCDoctor can remind you to look after your PC, or of anything else you choose.
+
+- **Add a reminder:** open **Settings → Reminders and notifications** and press **Add reminder**. Write what it is for (up to 80 characters), pick the date and time, and choose **Once**, **Every day**, **Every week** or **Every month**. The quick picks (**Free up space**, **Look for duplicate files**, **Back up important files**, **Restart your PC**) fill it in for you; the first two open the right screen when they come.
+- **Ready-made:** a monthly **Free up space** reminder is there from the start. Delete it with its **×** if you don't want it.
+- **The bell** at the top shows how many notifications are new. Click it to see them, newest first: **Open** goes to the right screen, **×** removes one. A new one also shows in the corner for a few seconds. The last 50 are kept, for up to 30 days.
+- **While PCDoctor is in the tray** (or its window is minimised), Windows shows the reminder next to the clock. Switch this off with **Windows notifications**.
+- **PC care alerts**, each with its own switch and at most once a day: a drive is almost full (less than 10% free), the PC slowed down to stay cool for 10 minutes or more today, or it has not restarted for 7 days.
+- Reminders come only while PCDoctor is open or in the tray. A reminder that came due while PCDoctor was closed shows once when you open it again, not once for every day missed. If closing the window quits PCDoctor, the Reminders section says so and offers **Keep running in the tray**.
+
 ## 10. Updating, and keeping your data
 
 - **To update:** download the newest installer from the Releases page and run it over the old one. **Your history, My Library, AI files, conversation and settings are kept.**
@@ -220,6 +234,15 @@ Open **Activity** and press **Undo**. This works as long as the files are still 
 **I closed PCDoctor but it is still running.**
 You chose **Keep running in the tray**. Right-click the PCDoctor icon next to the clock and choose **Quit PCDoctor**, or switch off **Settings → Running in the background → Keep running in the tray when I close the window**.
 
+**A reminder did not come.**
+Reminders come only while PCDoctor is open or running in the tray. Check **Settings → Running in the background → Keep running in the tray when I close the window**, and switch on **Start PCDoctor with Windows** if you want reminders after a restart without opening PCDoctor. A reminder missed while PCDoctor was closed shows once when you open it.
+
+**I don't want Windows notifications from PCDoctor.**
+Switch off **Settings → Reminders and notifications → Windows notifications**. Reminders still appear under the bell.
+
+**"Restart your PC" keeps coming although I shut down every evening.**
+With Windows' Fast Startup, **Shut down** does not fully restart the PC. Choose **Restart** once.
+
 **I can't see the tray icon.**
 Click the **^** arrow next to the clock; Windows hides some icons there. You can drag the PCDoctor icon next to the clock to keep it visible.
 
@@ -252,6 +275,10 @@ If PCDoctor is in the tray, right-click its icon and choose **Quit PCDoctor** fi
 
 **Background jobs (0.8.1).** Cleaning and the duplicate search run on their own thread, one of each at a time, and the window reads their state (step, count, result) whenever the screen is shown, so leaving a screen never stops or loses a job.
 
+**Reminders and notifications (0.12.0).** `reminders.rs` stores each reminder's first local wall time and repeat; the next time is worked out with chrono in local time (month ends clamped to the last day, a time skipped by a clock change comes an hour later, a repeated one the first time). A thread checks every 30 s; a missed reminder fires once. Alerts reuse the Dashboard's drive rule and the `heat:slowed` advice, take Windows' uptime for the restart alert, start 1 minute after launch and are limited to once per 24 hours each. Notifications go to the window as an event and, when it is not shown, to Windows through Tauri's notification plugin (AppUserModelID of the installed app). Reminder text stays on this PC: never in reports, logs or anything given to the AI.
+
+**My Library refresh (0.12.0).** The folder walk runs outside any transaction and files are saved 2,000 at a time in short transactions; files no longer found are removed only after a complete walk. Before, one transaction covered the whole walk, so other saves could fail with "database is locked" (on our test PC with 151,000 files: 592 of 595 saves failed during a refresh; after the fix 0 of 121, longest wait 11 ms).
+
 **Collection rules (0.11.2).** Size and age limits are computed with saturating arithmetic, clamped to `i64::MAX`, so a huge size matches no file (before 0.11.2, `(mb * 1 MiB) as i64` could wrap negative and match every file). The form accepts digits only and disables Save above 10,000,000 MB or 36,500 days.
 
 **Activity and the Recycle Bin (0.11.1).** When the Activity screen opens, `activity_list` reads the Recycle Bin once and counts, per entry, the files still there with the same matching as Undo (same original place, deleted within 15 minutes of the logged time; indexed by folder and name, 2,000 items in about 3 ms). An Undo that brings nothing back no longer marks the entry undone. 0.11.1 also updates rustls to 0.23.46 (RUSTSEC-2026-0346 to 0349).
@@ -268,14 +295,14 @@ If PCDoctor is in the tray, right-click its icon and choose **Quit PCDoctor** fi
 
 Links (KnowledgeWala, TeacherCircle, feedback, contact) open in your browser only when clicked, with `utm_source=pcdoctor` and nothing else.
 
-**Data on disk.** `%LOCALAPPDATA%\com.knowledgewala.pcdoctor\`: `pcdoctor.db` (history every 5 minutes while open or in the tray, including graphics card use, temperatures and minutes slowed down to stay cool, kept 90 days; My Library index; duplicate-search fingerprints (path, size, date and a BLAKE3 hash, forgotten after 30 days unseen), chosen folders and last results; activity log, 90 days), `ai\` (engine, model, `conversation.json` with the last 100 messages, `pc-context.md`, `insight.json`, `online-ai.json`), `update.json`. Own-service keys are stored in Windows Credential Manager (service name "PCDoctor online AI"). Before anything reaches an AI, the Windows user name and email-like strings are masked.
+**Data on disk.** `%LOCALAPPDATA%\com.knowledgewala.pcdoctor\`: `pcdoctor.db` (reminders and the last 50 notifications; history every 5 minutes while open or in the tray, including graphics card use, temperatures and minutes slowed down to stay cool, kept 90 days; My Library index; duplicate-search fingerprints (path, size, date and a BLAKE3 hash, forgotten after 30 days unseen), chosen folders and last results; activity log, 90 days), `ai\` (engine, model, `conversation.json` with the last 100 messages, `pc-context.md`, `insight.json`, `online-ai.json`), `update.json`. Own-service keys are stored in Windows Credential Manager (service name "PCDoctor online AI"). Before anything reaches an AI, the Windows user name and email-like strings are masked.
 
-**Quality.** Each release passes `npm audit`, TypeScript checks, 152 screen tests, 210 Rust unit tests and 4 network-guard tests, `cargo clippy -D warnings` and `cargo audit` in CI, plus real-PC tests on Windows 11 with the real AI, Recycle Bin and event log.
+**Quality.** Each release passes `npm audit`, TypeScript checks, 161 screen tests, 221 Rust unit tests and 4 network-guard tests, `cargo clippy -D warnings` and `cargo audit` in CI, plus real-PC tests on Windows 11 with the real AI, Recycle Bin and event log.
 
 **Verify your download.** Compare the SHA-256 shown on the release page with:
 
 ```
-certutil -hashfile PCDoctor_0.11.2_x64-setup.exe SHA256
+certutil -hashfile PCDoctor_0.12.0_x64-setup.exe SHA256
 ```
 
 **Licences.** PCDoctor is free to use under its licence agreement (shown in About). Third-party notices (Tauri, React, llama.cpp, Qwen and others) are listed in full in the app's About screen.
