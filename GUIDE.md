@@ -54,7 +54,7 @@ PCDoctor looks at your PC, explains what it finds in one simple sentence, and of
 ## 3. Install in 1 minute
 
 1. Open the **[Releases page](https://github.com/dharmsahu-hash/pcdoctor-releases/releases/latest)**.
-2. Under **Assets**, click **`PCDoctor_0.13.0_x64-setup.exe`** (about 4 MB) to download it.
+2. Under **Assets**, click **`PCDoctor_0.14.0_x64-setup.exe`** (about 4 MB) to download it.
 3. Double-click the downloaded file.
 4. If Windows shows **"Windows protected your PC"**, click **More info**, then **Run anyway**. This message appears for new apps that are not yet code-signed; it is expected.
 5. Click **Next**, **Install**, **Finish**. No administrator password is needed.
@@ -73,7 +73,7 @@ PCDoctor opens, and you will find it in the Start menu under **PCDoctor**.
 
 | Screen | What it does for you |
 |---|---|
-| **Dashboard** | Your PC at a glance: health, free space, memory and processor, every drive, the biggest programs right now, history charts, when a drive will be full at the current rate, what fills your disks, which programs crashed recently, and the **This week on your PC** summary. **Open the mini monitor** (under the tiles) opens a small always-on-top window with processor, memory, graphics card and temperatures. |
+| **Dashboard** | Your PC at a glance: health, free space, memory and processor, every drive, the biggest programs right now (named as Task Manager names them, with their helpers and, for service hosts, the Windows services inside), history charts, when a drive will be full at the current rate, what fills your disks, which programs crashed recently, and the **This week on your PC** summary. **Open the mini monitor** (under the tiles) opens a small always-on-top window with processor, memory, graphics card and temperatures. |
 | **Slow or hot?** | Press **Check my PC** for the main causes in plain words, for example a program crashing in a loop, a nearly full drive, or memory under pressure, or that the PC slowed itself down to stay cool for a long time today. **Show details** reveals the technical part. |
 | **Free up space** | Lists temporary files, old crash reports, graphics card cache, app download leftovers and old installers, with sizes. Tick and **Clean**: they go to the Recycle Bin. Cleaning carries on in the background, so you don't need to wait on this screen: it shows **Cleaning is in progress** with a count, and the result when it is done. |
 | **Duplicates** | Finds files with exactly the same content. Under **Where to look**, press **Change** to add any folder or a whole drive (such as D:), remove one, or go back to the standard folders. Press **Find duplicates**; the search carries on in the background, and the last results show straight away next time. Tick the copies to delete yourself (Shift+click for a range), or let PCDoctor tick the extra copies in every group, keeping the suggested, newest or oldest one; then **Delete selected**. **The last copy can never be deleted.** |
@@ -252,6 +252,9 @@ Click the **^** arrow next to the clock; Windows hides some icons there. You can
 **The mini monitor says "Not available on this PC" for a temperature.**
 Your PC has no sensor PCDoctor can read safely. Graphics card temperature is read on NVIDIA cards only, and the PC temperature only when Windows reports a real, changing value. PCDoctor does not install the extra drivers other tools use, because Microsoft Defender flags them.
 
+**A program on the Dashboard has a different name from Task Manager.**
+PCDoctor uses the same source as Task Manager for most programs, but a few built-in Windows parts keep their file name (for example CHXSmartScreen.exe). Tell us which one with **Share feedback**.
+
 **Is PCDoctor free?** Yes, free to download and use.
 
 **Does it work on Mac, Linux or phones?** Not yet. Tell us if you want it: [Suggest a feature](https://github.com/dharmsahu-hash/pcdoctor-releases/issues/new?template=feature-request.yml).
@@ -282,6 +285,8 @@ If PCDoctor is in the tray, right-click its icon and choose **Quit PCDoctor** fi
 
 **Reminders and notifications (0.12.0).** `reminders.rs` stores each reminder's first local wall time and repeat; the next time is worked out with chrono in local time (month ends clamped to the last day, a time skipped by a clock change comes an hour later, a repeated one the first time). A thread checks every 30 s; a missed reminder fires once. Alerts reuse the Dashboard's drive rule and the `heat:slowed` advice, take Windows' uptime for the restart alert, start 1 minute after launch and are limited to once per 24 hours each. Notifications go to the window as an event and, when it is not shown, to Windows through Tauri's notification plugin (AppUserModelID of the installed app). Reminder text stays on this PC: never in reports, logs or anything given to the AI.
 
+**Program names and services (0.14.0).** `procnames.rs` reads each program's file description from version.dll, the running services per process from the Service Control Manager (`EnumServicesStatusExW`, enumerate right only, no administrator) and app package names from `AppxManifest.xml`; both DLLs come from System32 only, and with `monitor.rs` it is the only module with `unsafe` code (a test enforces it). Processes are grouped under their highest ancestor that is not a launcher (Explorer, services.exe, svchost.exe, shells), a parent must be older than its child, and each svchost is its own "Service Host: <service>" entry. The advice rules still use the groups by file name. No file paths leave the reader. Snapshot time on the test PC: 0.9 s for the first, then about 0.4 s.
+
 **My Library refresh (0.12.0).** The folder walk runs outside any transaction and files are saved 2,000 at a time in short transactions; files no longer found are removed only after a complete walk. Before, one transaction covered the whole walk, so other saves could fail with "database is locked" (on our test PC with 151,000 files: 592 of 595 saves failed during a refresh; after the fix 0 of 121, longest wait 11 ms).
 
 **Collection rules (0.11.2).** Size and age limits are computed with saturating arithmetic, clamped to `i64::MAX`, so a huge size matches no file (before 0.11.2, `(mb * 1 MiB) as i64` could wrap negative and match every file). The form accepts digits only and disables Save above 10,000,000 MB or 36,500 days.
@@ -302,12 +307,12 @@ Links (KnowledgeWala, TeacherCircle, feedback, contact) open in your browser onl
 
 **Data on disk.** `%LOCALAPPDATA%\com.knowledgewala.pcdoctor\`: `pcdoctor.db` (reminders and the last 50 notifications; history every 5 minutes while open or in the tray, including graphics card use, temperatures and minutes slowed down to stay cool, kept 90 days; My Library index; duplicate-search fingerprints (path, size, date and a BLAKE3 hash, forgotten after 30 days unseen), chosen folders and last results; activity log, 90 days), `ai\` (engine, model, `conversation.json` with the last 100 messages, `pc-context.md`, `insight.json`, `online-ai.json`), `update.json`. Own-service keys are stored in Windows Credential Manager (service name "PCDoctor online AI"). Before anything reaches an AI, the Windows user name and email-like strings are masked.
 
-**Quality.** Each release passes `npm audit`, TypeScript checks, 167 screen tests, 221 Rust unit tests and 4 network-guard tests, `cargo clippy -D warnings` and `cargo audit` in CI, plus real-PC tests on Windows 11 with the real AI, Recycle Bin and event log.
+**Quality.** Each release passes `npm audit`, TypeScript checks, 169 screen tests, 227 Rust unit tests and 4 network-guard tests, `cargo clippy -D warnings` and `cargo audit` in CI, plus real-PC tests on Windows 11 with the real AI, Recycle Bin and event log.
 
 **Verify your download.** Compare the SHA-256 shown on the release page with:
 
 ```
-certutil -hashfile PCDoctor_0.13.0_x64-setup.exe SHA256
+certutil -hashfile PCDoctor_0.14.0_x64-setup.exe SHA256
 ```
 
 **Licences.** PCDoctor is free to use under its licence agreement (shown in About). Third-party notices (Tauri, React, llama.cpp, Qwen and others) are listed in full in the app's About screen.
