@@ -54,7 +54,7 @@ PCDoctor looks at your PC, explains what it finds in one simple sentence, and of
 ## 3. Install in 1 minute
 
 1. Open the **[Releases page](https://github.com/dharmsahu-hash/pcdoctor-releases/releases/latest)**.
-2. Under **Assets**, click **`PCDoctor_0.19.1_x64-setup.exe`** (about 4 MB) to download it.
+2. Under **Assets**, click **`PCDoctor_0.20.0_x64-setup.exe`** (about 4 MB) to download it.
 3. Double-click the downloaded file.
 4. If Windows shows **"Windows protected your PC"**, click **More info**, then **Run anyway**. This message appears for new apps that are not yet code-signed; it is expected.
 5. Click **Next**, **Install**, **Finish**. No administrator password is needed.
@@ -79,7 +79,7 @@ PCDoctor opens, and you will find it in the Start menu under **PCDoctor**.
 | **Duplicates** | Finds files with exactly the same content. Under **Where to look**, press **Change** to add any folder or a whole drive (such as D:), remove one, or go back to the standard folders. Press **Find duplicates**; the search carries on in the background, and the last results show straight away next time. Tick the copies to delete yourself (Shift+click for a range), or let PCDoctor tick the extra copies in every group, keeping the suggested, newest or oldest one; then **Delete selected**. **The last copy can never be deleted.** |
 | **My Library** | Every PDF, document, video, photo, music file, archive and installer on your drives in ready-made collections (or your own). **Search inside files** (off until you switch it on) finds files by words inside them, using the index Windows already keeps. Search by name, open, show in folder, or delete (to the Recycle Bin). Tick several files (Shift+click for a range) to delete them together. In your own collections, **Bigger than (MB)** takes up to 10,000,000 MB and **Changed in the last (days)** up to 36,500 days, digits only. |
 | **Apps** | **App updates** (off until you switch it on): lists apps with newer versions through Microsoft's winget, with **Update** after you confirm; an update cannot be undone. Installed apps labelled **Remove**, **Update** or **Keep**, and programs that start with Windows labelled **Stop at startup** or **Keep**, each with a reason. Buttons open the right Windows Settings page. |
-| **Automation** | Your own cleanup rules for chosen folders: which files (name patterns, age, size, keep the newest few), when (every few hours, day, week or month, once, or only on **Run now**) and what happens (**Preview only**, **Recycle Bin**, **quarantine**, or **Delete permanently** once you allow it in **Automation settings**). Rules can take files or whole folders. **Preview** shows exactly which files a rule would move before it can move any. Each rule has a **History** with **Put them back** for quarantined files. See section 9d. |
+| **Automation** | Your own cleanup rules for chosen folders: which files (name patterns, age, size, keep the newest few), when (every few hours, day, week or month, once, or only on **Run now**) and what happens (**Preview only**, **Recycle Bin**, **quarantine**, or **Delete permanently** once you allow it in **Automation settings**). Rules can take files or whole folders, and can run even while PCDoctor is closed once you switch that on (0.20.0). **Preview** shows exactly which files a rule would move before it can move any. Each rule has a **History** with **Put them back** for quarantined files. See section 9d. |
 | **Reminders** | Your own reminders (once, every day, week or month) with **Add reminder** at the top, and the PC care alerts with their switches. Also opens from the bell's **Reminder settings** and **Settings → Open Reminders**. |
 | **Activity** | Everything PCDoctor moved to the Recycle Bin (including by an automation rule) or stopped starting with Windows in the last 90 days, and each time you switched **Start PCDoctor with Windows** on or off, with **Undo**. |
 | **Your data** | Everything PCDoctor keeps on your PC (history, My Library list, activity log, automation history, duplicate fingerprints, reminders and notifications, AI conversation), how much and why, with a **Delete** for each part and **Keep my AI conversation**. Open it from the privacy line at the top of every screen. |
@@ -208,7 +208,7 @@ Where there is no real sensor it says **Not available on this PC**; PCDoctor nev
    - **Keep the newest**: so many files in each folder are always kept, for example your last 10 backups.
 4. **When:**
    - **Only when I press Run now**, **Every few hours**, **Every day**, **Every week**, **Every month** or **Once**, from the date and time you choose.
-   - Rules run while PCDoctor is open or in the tray.
+   - Rules run while PCDoctor is open or in the tray, or also while it is closed if you switch that on (below).
    - A run missed while the PC was off comes once, a couple of minutes after PCDoctor starts.
 5. **What happens to the files:**
    - **Preview only** (every new rule starts here; nothing is touched).
@@ -232,6 +232,12 @@ Deleted files skip the Recycle Bin and **cannot be brought back**. They are list
 - Under **What to clean**, choose **Whole folders**. Names match folder names (`cache*`), the age is the newest file inside, and the size is everything inside. Folders go to the Recycle Bin or are deleted permanently, not to quarantine.
 - A folder holding a link, a Windows system file, a read-only file or an online-only OneDrive file is always left. The folders you chose never go.
 - For file rules, **Also remove folders left empty** removes folders with nothing inside after the run. **Undo** and **Put them back** make them again.
+
+**Run rules even when PCDoctor is closed (new in 0.20.0):**
+- Under **Automation settings**, switch on **Run rules even when PCDoctor is closed**. PCDoctor adds a task named **PCDoctor Automation** to your own Windows Task Scheduler (no administrator rights needed).
+- While you are signed in, it checks every 15 minutes for due rules and runs them without a window. Their notices wait under the bell.
+- While PCDoctor is open or in the tray, it does nothing; PCDoctor runs the rules itself, and the two never run rules at the same time.
+- Switch it off to remove the task; Activity lists each change with **Undo**. Uninstalling PCDoctor removes the task; updating keeps it.
 
 **Safe by design:**
 - Windows, Program Files, ProgramData, your profile and AppData folders themselves, whole drives, network folders and links are refused, with the reason.
@@ -317,6 +323,12 @@ Open **Automation → History**, press **Files** next to the run, and read the r
 **An automation rule says "Could not run".**
 Usually its folder is not there, for example a USB drive that is not plugged in. The rule tries again after an hour, up to three times, then waits for its next time.
 
+**Do automation rules run when PCDoctor is closed?**
+Since 0.20.0, yes, if you switch on **Run rules even when PCDoctor is closed** in Automation settings. A task in Windows Task Scheduler then checks every 15 minutes while you are signed in. Their history shows *While PCDoctor was closed*. Without the switch, rules run while PCDoctor is open or in the tray.
+
+**I see "PCDoctor Automation" in Task Scheduler. What is it?**
+The task that runs your automation rules while PCDoctor is closed, added when you switched that on. Switch it off in PCDoctor (Automation settings) to remove it; please do not change it in Task Scheduler.
+
 **Can I get back files an automation rule deleted permanently?**
 No. PCDoctor and the Recycle Bin cannot bring them back; only your own backup can. That is why the setting is off until you allow it, and each rule asks you to type its name.
 
@@ -364,6 +376,7 @@ If PCDoctor is in the tray, right-click its icon and choose **Quit PCDoctor** fi
 - **Running:** one worker thread runs rules one at a time, and a rule is never queued twice. The schedule is checked every 30 s from 2 minutes after start, using the reminders' local-time code. A failed run is retried after an hour, up to three times.
 - **Measured on the test PC:** a 100,000-file preview in 0.45 s, and 0.01% of the processor idle in the tray.
 - **Delete permanently and folders (0.19.0):** `Action::Delete` needs lib_meta `auto_delete_allowed` and the typed rule name, both checked in Rust; a run with the setting off fails without retries. `What::Folders` measures each candidate folder without following links (files, bytes, newest file date; never one holding a link, system, read-only or online-only file) and measures it again right before deletion. Files are removed one by one, then folders bottom up. Activity kind `autoDelete` has no Undo. "Remove folders left empty" removes empty folders bottom up, never the chosen folders; Undo and Put back create them again.
+- **Closed-PC runs (0.20.0):** `schedtask.rs` creates a per-user task with `schtasks /Create /XML` (InteractiveToken, LeastPrivilege, PT15M repetition, StartWhenAvailable, IgnoreNew, priority 7, PT2H limit) starting `pcdoctor.exe --run-due-rules`, which runs due rules before any window is built and exits. `app.lock` (held while PCDoctor is open) makes it do nothing; `rules.lock` makes the app and the task take turns. Activity kind `automationTask` with Undo. The uninstall hook deletes the task on a real uninstall.
 
 **App updates (0.16.0).** `winget.rs` runs Microsoft's winget (the WindowsApps alias, hidden) only while **Check which apps have newer versions** is on; a test proves no winget process starts while it is off. Listing: `winget upgrade --disable-interactivity`, read by the positions of the heading words (any language). Updating one app from the last list, after Update and Confirm: `winget upgrade --id <Id> --exact --silent --disable-interactivity --accept-package-agreements`. PCDoctor never accepts winget's source agreement for you. Activity notes each update without Undo.
 
@@ -391,12 +404,12 @@ Links (KnowledgeWala, TeacherCircle, feedback, contact) open in your browser onl
 
 **Data on disk.** `%LOCALAPPDATA%\com.knowledgewala.pcdoctor\`: `pcdoctor.db` (reminders and the last 50 notifications; history every 5 minutes while open or in the tray, including graphics card use, temperatures and minutes slowed down to stay cool, kept 90 days; My Library index; duplicate-search fingerprints (path, size, date and a BLAKE3 hash, forgotten after 30 days unseen), chosen folders and last results; activity log, 90 days), `ai\` (engine, model, `conversation.json` with the last 100 messages, `pc-context.md`, `insight.json`, `online-ai.json`), `update.json`. Own-service keys are stored in Windows Credential Manager (service name "PCDoctor online AI"). Before anything reaches an AI, the Windows user name and email-like strings are masked.
 
-**Quality.** Each release passes `npm audit`, TypeScript checks, 189 screen tests, 258 Rust unit tests and 4 network-guard tests, `cargo clippy -D warnings` and `cargo audit` in CI, plus real-PC tests on Windows 11 with the real AI, Recycle Bin and event log.
+**Quality.** Each release passes `npm audit`, TypeScript checks, 191 screen tests, 261 Rust unit tests and 4 network-guard tests, `cargo clippy -D warnings` and `cargo audit` in CI, plus real-PC tests on Windows 11 with the real AI, Recycle Bin and event log.
 
 **Verify your download.** Compare the SHA-256 shown on the release page with:
 
 ```
-certutil -hashfile PCDoctor_0.19.1_x64-setup.exe SHA256
+certutil -hashfile PCDoctor_0.20.0_x64-setup.exe SHA256
 ```
 
 **Licences.** PCDoctor is free to use under its licence agreement (shown in About). Third-party notices (Tauri, React, llama.cpp, Qwen and others) are listed in full in the app's About screen.
