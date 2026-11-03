@@ -54,7 +54,7 @@ PCDoctor looks at your PC, explains what it finds in one simple sentence, and of
 ## 3. Install in 1 minute
 
 1. Open the **[Releases page](https://github.com/dharmsahu-hash/pcdoctor-releases/releases/latest)**.
-2. Under **Assets**, click **`PCDoctor_0.21.0_x64-setup.exe`** (about 4 MB) to download it.
+2. Under **Assets**, click **`PCDoctor_0.22.0_x64-setup.exe`** (about 4 MB) to download it.
 3. Double-click the downloaded file.
 4. If Windows shows **"Windows protected your PC"**, click **More info**, then **Run anyway**. This message appears for new apps that are not yet code-signed; it is expected.
 5. Click **Next**, **Install**, **Finish**. No administrator password is needed.
@@ -249,6 +249,30 @@ Deleted files skip the Recycle Bin and **cannot be brought back**. They are list
 - Every file is checked again right before it moves; if it changed or is in use, it stays.
 - **Nothing is deleted for ever** unless you allowed it and confirmed that rule.
 
+## 9e. Rules for your servers
+
+**New in 0.22.0.** Run the same cleanup rules on a Windows server you look after. You copy a signed file yourself; nothing goes over the network. Install PCDoctor on the server too.
+
+**On your PC**
+1. In **Automation → Rules for your servers**, press **Show**. You see this PC's name and a short key code (for example `B724-F22D-BC98-A552`).
+2. Once per server, press **Save this PC's key…** and copy the `.pcdkey` file to the server. It holds only this PC's name and public key, no secret.
+3. Tick the rules, write the server's computer name (on the server: Settings → System → About), and press **Export…**. Copy the `.pcdrules` file to the server.
+
+**On the server, in PCDoctor**
+1. **Trust a PC…**: choose the `.pcdkey`, check that the key code matches the one on your PC, and press **Trust it**.
+2. **Import a rules file…**: choose the `.pcdrules`. Each rule shows as *New*, *Changed*, *Removed* or *No change*, with how many files it would take there now. Press **Apply** (all or nothing).
+
+The server refuses, and says why, a file that:
+- comes from a PC it does not trust;
+- is meant for another computer;
+- is older than one it took, or is the same file again;
+- was changed after it was signed;
+- has a rule its own folder protection refuses.
+
+Rules that delete permanently need that setting on **on the server**, and the server's name typed.
+
+A newer file from the same PC changes only that PC's rules; the server's own rules are never touched. **Untrust** keeps that PC's rules as the server's own, or removes them. To see what ran, use **History → Export…** on the server.
+
 ## 10. Updating, and keeping your data
 
 - **To update:** download the newest installer from the Releases page and run it over the old one. **Your history, My Library, AI files, conversation and settings are kept.**
@@ -332,6 +356,12 @@ Since 0.20.0, yes, if you switch on **Run rules even when PCDoctor is closed** i
 **I see "PCDoctor Automation" in Task Scheduler. What is it?**
 The task that runs your automation rules while PCDoctor is closed, added when you switched that on. Switch it off in PCDoctor (Automation settings) to remove it; please do not change it in Task Scheduler.
 
+**Do rules for my servers go over the network?**
+No. You copy the files yourself (USB stick, Remote Desktop, your own shared folder). The server checks the signature, that it trusts your PC, that the file is for its own name and that it is new, and runs the rules with its own safety checks.
+
+**I lost my PC or reinstalled Windows. What about my servers?**
+On each server, **Untrust** the old PC. Then save the new PC's key and trust it there.
+
 **Can I get back files an automation rule deleted permanently?**
 No. PCDoctor and the Recycle Bin cannot bring them back; only your own backup can. That is why the setting is off until you allow it, and each rule asks you to type its name.
 
@@ -379,6 +409,11 @@ If PCDoctor is in the tray, right-click its icon and choose **Quit PCDoctor** fi
 - **Running:** one worker thread runs rules one at a time, and a rule is never queued twice. The schedule is checked every 30 s from 2 minutes after start, using the reminders' local-time code. A failed run is retried after an hour, up to three times.
 - **Measured on the test PC:** a 100,000-file preview in 0.45 s, and 0.01% of the processor idle in the tray.
 - **Delete permanently and folders (0.19.0):** `Action::Delete` needs lib_meta `auto_delete_allowed` and the typed rule name, both checked in Rust; a run with the setting off fails without retries. `What::Folders` measures each candidate folder without following links (files, bytes, newest file date; never one holding a link, system, read-only or online-only file) and measures it again right before deletion. Files are removed one by one, then folders bottom up. Activity kind `autoDelete` has no Undo. "Remove folders left empty" removes empty folders bottom up, never the chosen folders; Undo and Put back create them again.
+- **Rules for your servers (0.22.0):** `bundles.rs`, no network.
+  - **Keys:** Ed25519 (`ed25519-dalek`). The 32-byte secret is made from the OS random source and kept in Windows Credential Manager. The fingerprint is the first 8 bytes of SHA-256 of the public key.
+  - **The file:** a `.pcdrules` holds the payload as JSON text (server name, sender, created time, a sequence number, the rules) and a signature over those exact bytes.
+  - **The server** keeps trusted keys and the last sequence per key. It checks the signature, trust, its own computer name and the sequence, then previews each rule through its own guard. It applies all or nothing in one transaction.
+  - **Ownership:** rules carry the sender's key, so a later file changes or removes only those.
 - **History (0.21.0):** `Filter` (rule, status or "problems", from/to, name text) drives `find_runs`/`find_files`; name search is `LIKE … ESCAPE '\'` with `%`, `_` and `\` taken literally. `export` writes runs only (counts and sizes) unless paths are asked for; CSV quotes fields with commas, quotes or line breaks and prefixes fields starting with `= + - @` with `'`. Retention: lib_meta `auto_keep_days` (30/90/365), pruned at once and after each run; unrestored quarantine records are kept.
 - **Closed-PC runs (0.20.0):** `schedtask.rs` creates a per-user task with `schtasks /Create /XML` (InteractiveToken, LeastPrivilege, PT15M repetition, StartWhenAvailable, IgnoreNew, priority 7, PT2H limit) starting `pcdoctor.exe --run-due-rules`, which runs due rules before any window is built and exits. `app.lock` (held while PCDoctor is open) makes it do nothing; `rules.lock` makes the app and the task take turns. Activity kind `automationTask` with Undo. The uninstall hook deletes the task on a real uninstall.
 
@@ -408,12 +443,12 @@ Links (KnowledgeWala, TeacherCircle, feedback, contact) open in your browser onl
 
 **Data on disk.** `%LOCALAPPDATA%\com.knowledgewala.pcdoctor\`: `pcdoctor.db` (reminders and the last 50 notifications; history every 5 minutes while open or in the tray, including graphics card use, temperatures and minutes slowed down to stay cool, kept 90 days; My Library index; duplicate-search fingerprints (path, size, date and a BLAKE3 hash, forgotten after 30 days unseen), chosen folders and last results; activity log, 90 days), `ai\` (engine, model, `conversation.json` with the last 100 messages, `pc-context.md`, `insight.json`, `online-ai.json`), `update.json`. Own-service keys are stored in Windows Credential Manager (service name "PCDoctor online AI"). Before anything reaches an AI, the Windows user name and email-like strings are masked.
 
-**Quality.** Each release passes `npm audit`, TypeScript checks, 193 screen tests, 263 Rust unit tests and 4 network-guard tests, `cargo clippy -D warnings` and `cargo audit` in CI, plus real-PC tests on Windows 11 with the real AI, Recycle Bin and event log.
+**Quality.** Each release passes `npm audit`, TypeScript checks, 194 screen tests, 267 Rust unit tests and 4 network-guard tests, `cargo clippy -D warnings` and `cargo audit` in CI, plus real-PC tests on Windows 11 with the real AI, Recycle Bin and event log.
 
 **Verify your download.** Compare the SHA-256 shown on the release page with:
 
 ```
-certutil -hashfile PCDoctor_0.21.0_x64-setup.exe SHA256
+certutil -hashfile PCDoctor_0.22.0_x64-setup.exe SHA256
 ```
 
 **Licences.** PCDoctor is free to use under its licence agreement (shown in About). Third-party notices (Tauri, React, llama.cpp, Qwen and others) are listed in full in the app's About screen.
