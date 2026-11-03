@@ -54,7 +54,7 @@ PCDoctor looks at your PC, explains what it finds in one simple sentence, and of
 ## 3. Install in 1 minute
 
 1. Open the **[Releases page](https://github.com/dharmsahu-hash/pcdoctor-releases/releases/latest)**.
-2. Under **Assets**, click **`PCDoctor_0.19.0_x64-setup.exe`** (about 4 MB) to download it.
+2. Under **Assets**, click **`PCDoctor_0.19.1_x64-setup.exe`** (about 4 MB) to download it.
 3. Double-click the downloaded file.
 4. If Windows shows **"Windows protected your PC"**, click **More info**, then **Run anyway**. This message appears for new apps that are not yet code-signed; it is expected.
 5. Click **Next**, **Install**, **Finish**. No administrator password is needed.
@@ -396,7 +396,7 @@ Links (KnowledgeWala, TeacherCircle, feedback, contact) open in your browser onl
 **Verify your download.** Compare the SHA-256 shown on the release page with:
 
 ```
-certutil -hashfile PCDoctor_0.19.0_x64-setup.exe SHA256
+certutil -hashfile PCDoctor_0.19.1_x64-setup.exe SHA256
 ```
 
 **Licences.** PCDoctor is free to use under its licence agreement (shown in About). Third-party notices (Tauri, React, llama.cpp, Qwen and others) are listed in full in the app's About screen.
