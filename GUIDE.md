@@ -54,7 +54,7 @@ PCDoctor looks at your PC, explains what it finds in one simple sentence, and of
 ## 3. Install in 1 minute
 
 1. Open the **[Releases page](https://github.com/dharmsahu-hash/pcdoctor-releases/releases/latest)**.
-2. Under **Assets**, click **`PCDoctor_0.20.0_x64-setup.exe`** (about 4 MB) to download it.
+2. Under **Assets**, click **`PCDoctor_0.21.0_x64-setup.exe`** (about 4 MB) to download it.
 3. Double-click the downloaded file.
 4. If Windows shows **"Windows protected your PC"**, click **More info**, then **Run anyway**. This message appears for new apps that are not yet code-signed; it is expected.
 5. Click **Next**, **Install**, **Finish**. No administrator password is needed.
@@ -220,7 +220,10 @@ Where there is no real sensor it says **Not available on this PC**; PCDoctor nev
 Each rule has:
 - **Run now**, **Pause**/**Resume**, edit, **Copy** (the copy is paused and set to Preview only), **History** and **Delete** (it asks first; the history stays).
 - **Cancel** stops a running rule after the file it is on.
-- **History** shows each run for 90 days: when and why it ran, what was moved and what was left (and why, for example a file in use), and the space freed.
+- **History** shows each run (90 days unless you change it): when and why it ran, what was moved and what was left (and why, for example a file in use), and the space freed.
+  - **Filters (new in 0.21.0):** **Rule**, **Result** (or *Only problems*), **From** and **To** dates. Type part of a **file or folder name** to see each matching file, what happened to it, and the runs that touched it.
+  - **Export… (new in 0.21.0):** saves the runs shown as **CSV** (Excel) or **JSON**: when, rule, result, counts and sizes. Tick **Include file names and folders** to add one line per file with its full path. It is unticked every time, since the file then shows your folder names.
+  - **Keep the history for** 30, 90 or 365 days, in **Automation settings**. Files still in quarantine always stay listed.
 
 **Delete permanently (new in 0.19.0):**
 1. Under **Automation settings** (below your rules), switch on **Allow rules to delete permanently**, read the warning, and press **I understand, allow it**. It is off until you do.
@@ -376,6 +379,7 @@ If PCDoctor is in the tray, right-click its icon and choose **Quit PCDoctor** fi
 - **Running:** one worker thread runs rules one at a time, and a rule is never queued twice. The schedule is checked every 30 s from 2 minutes after start, using the reminders' local-time code. A failed run is retried after an hour, up to three times.
 - **Measured on the test PC:** a 100,000-file preview in 0.45 s, and 0.01% of the processor idle in the tray.
 - **Delete permanently and folders (0.19.0):** `Action::Delete` needs lib_meta `auto_delete_allowed` and the typed rule name, both checked in Rust; a run with the setting off fails without retries. `What::Folders` measures each candidate folder without following links (files, bytes, newest file date; never one holding a link, system, read-only or online-only file) and measures it again right before deletion. Files are removed one by one, then folders bottom up. Activity kind `autoDelete` has no Undo. "Remove folders left empty" removes empty folders bottom up, never the chosen folders; Undo and Put back create them again.
+- **History (0.21.0):** `Filter` (rule, status or "problems", from/to, name text) drives `find_runs`/`find_files`; name search is `LIKE … ESCAPE '\'` with `%`, `_` and `\` taken literally. `export` writes runs only (counts and sizes) unless paths are asked for; CSV quotes fields with commas, quotes or line breaks and prefixes fields starting with `= + - @` with `'`. Retention: lib_meta `auto_keep_days` (30/90/365), pruned at once and after each run; unrestored quarantine records are kept.
 - **Closed-PC runs (0.20.0):** `schedtask.rs` creates a per-user task with `schtasks /Create /XML` (InteractiveToken, LeastPrivilege, PT15M repetition, StartWhenAvailable, IgnoreNew, priority 7, PT2H limit) starting `pcdoctor.exe --run-due-rules`, which runs due rules before any window is built and exits. `app.lock` (held while PCDoctor is open) makes it do nothing; `rules.lock` makes the app and the task take turns. Activity kind `automationTask` with Undo. The uninstall hook deletes the task on a real uninstall.
 
 **App updates (0.16.0).** `winget.rs` runs Microsoft's winget (the WindowsApps alias, hidden) only while **Check which apps have newer versions** is on; a test proves no winget process starts while it is off. Listing: `winget upgrade --disable-interactivity`, read by the positions of the heading words (any language). Updating one app from the last list, after Update and Confirm: `winget upgrade --id <Id> --exact --silent --disable-interactivity --accept-package-agreements`. PCDoctor never accepts winget's source agreement for you. Activity notes each update without Undo.
@@ -404,12 +408,12 @@ Links (KnowledgeWala, TeacherCircle, feedback, contact) open in your browser onl
 
 **Data on disk.** `%LOCALAPPDATA%\com.knowledgewala.pcdoctor\`: `pcdoctor.db` (reminders and the last 50 notifications; history every 5 minutes while open or in the tray, including graphics card use, temperatures and minutes slowed down to stay cool, kept 90 days; My Library index; duplicate-search fingerprints (path, size, date and a BLAKE3 hash, forgotten after 30 days unseen), chosen folders and last results; activity log, 90 days), `ai\` (engine, model, `conversation.json` with the last 100 messages, `pc-context.md`, `insight.json`, `online-ai.json`), `update.json`. Own-service keys are stored in Windows Credential Manager (service name "PCDoctor online AI"). Before anything reaches an AI, the Windows user name and email-like strings are masked.
 
-**Quality.** Each release passes `npm audit`, TypeScript checks, 191 screen tests, 261 Rust unit tests and 4 network-guard tests, `cargo clippy -D warnings` and `cargo audit` in CI, plus real-PC tests on Windows 11 with the real AI, Recycle Bin and event log.
+**Quality.** Each release passes `npm audit`, TypeScript checks, 193 screen tests, 263 Rust unit tests and 4 network-guard tests, `cargo clippy -D warnings` and `cargo audit` in CI, plus real-PC tests on Windows 11 with the real AI, Recycle Bin and event log.
 
 **Verify your download.** Compare the SHA-256 shown on the release page with:
 
 ```
-certutil -hashfile PCDoctor_0.20.0_x64-setup.exe SHA256
+certutil -hashfile PCDoctor_0.21.0_x64-setup.exe SHA256
 ```
 
 **Licences.** PCDoctor is free to use under its licence agreement (shown in About). Third-party notices (Tauri, React, llama.cpp, Qwen and others) are listed in full in the app's About screen.
