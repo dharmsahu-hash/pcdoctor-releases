@@ -54,7 +54,7 @@ PCDoctor looks at your PC, explains what it finds in one simple sentence, and of
 ## 3. Install in 1 minute
 
 1. Open the **[Releases page](https://github.com/dharmsahu-hash/pcdoctor-releases/releases/latest)**.
-2. Under **Assets**, click **`PCDoctor_0.16.0_x64-setup.exe`** (about 4 MB) to download it.
+2. Under **Assets**, click **`PCDoctor_0.17.0_x64-setup.exe`** (about 4 MB) to download it.
 3. Double-click the downloaded file.
 4. If Windows shows **"Windows protected your PC"**, click **More info**, then **Run anyway**. This message appears for new apps that are not yet code-signed; it is expected.
 5. Click **Next**, **Install**, **Finish**. No administrator password is needed.
@@ -77,7 +77,7 @@ PCDoctor opens, and you will find it in the Start menu under **PCDoctor**.
 | **Slow or hot?** | Press **Check my PC** for the main causes in plain words, for example a program crashing in a loop, a nearly full drive, or memory under pressure, or that the PC slowed itself down to stay cool for a long time today. **Show details** reveals the technical part. |
 | **Free up space** | Lists temporary files, old crash reports, graphics card cache, app download leftovers and old installers, with sizes. Tick and **Clean**: they go to the Recycle Bin. Cleaning carries on in the background, so you don't need to wait on this screen: it shows **Cleaning is in progress** with a count, and the result when it is done. |
 | **Duplicates** | Finds files with exactly the same content. Under **Where to look**, press **Change** to add any folder or a whole drive (such as D:), remove one, or go back to the standard folders. Press **Find duplicates**; the search carries on in the background, and the last results show straight away next time. Tick the copies to delete yourself (Shift+click for a range), or let PCDoctor tick the extra copies in every group, keeping the suggested, newest or oldest one; then **Delete selected**. **The last copy can never be deleted.** |
-| **My Library** | Every PDF, document, video, photo, music file, archive and installer on your drives in ready-made collections (or your own). Search, open, show in folder, or delete (to the Recycle Bin). Tick several files (Shift+click for a range) to delete them together. In your own collections, **Bigger than (MB)** takes up to 10,000,000 MB and **Changed in the last (days)** up to 36,500 days, digits only. |
+| **My Library** | Every PDF, document, video, photo, music file, archive and installer on your drives in ready-made collections (or your own). **Search inside files** (off until you switch it on) finds files by words inside them, using the index Windows already keeps. Search by name, open, show in folder, or delete (to the Recycle Bin). Tick several files (Shift+click for a range) to delete them together. In your own collections, **Bigger than (MB)** takes up to 10,000,000 MB and **Changed in the last (days)** up to 36,500 days, digits only. |
 | **Apps** | **App updates** (off until you switch it on): lists apps with newer versions through Microsoft's winget, with **Update** after you confirm; an update cannot be undone. Installed apps labelled **Remove**, **Update** or **Keep**, and programs that start with Windows labelled **Stop at startup** or **Keep**, each with a reason. Buttons open the right Windows Settings page. |
 | **Reminders** | Your own reminders (once, every day, week or month) with **Add reminder** at the top, and the PC care alerts with their switches. Also opens from the bell's **Reminder settings** and **Settings → Open Reminders**. |
 | **Activity** | Everything PCDoctor moved to the Recycle Bin or stopped starting with Windows in the last 90 days, and each time you switched **Start PCDoctor with Windows** on or off, with **Undo**. |
@@ -202,7 +202,7 @@ Where there is no real sensor it says **Not available on this PC**; PCDoctor nev
 
 **Everything PCDoctor learns about your PC stays on your PC.** To see exactly what it keeps, click the privacy line at the top of any screen (or **Settings → Your data**): each kind of data is listed with how much is kept and why, and each has its own **Delete**. Switch **Keep my AI conversation** off there (or on the Ask screen) and your questions to the AI are kept in memory only and forgotten when PCDoctor closes.
 
-- PCDoctor reads how your PC is running (program names, memory, processor, disk space) and, for My Library, the names, sizes and dates of your files. **It never reads inside your files**, and never reads your browser, emails, chats or passwords.
+- PCDoctor reads how your PC is running (program names, memory, processor, disk space) and, for My Library, the names, sizes and dates of your files. **It never opens your files to read them** (Search inside files, if you switch it on, asks the index Windows already keeps, and its results stay on screen), and never reads your browser, emails, chats or passwords.
 - **No account, no tracking, no ads, no telemetry.** We cannot see how many people use PCDoctor.
 - PCDoctor goes online only for things you switch on: the one-time AI download, the daily update check, and your own AI service if you set one up.
 - **Settings → Delete everything PCDoctor saved** wipes its history, My Library list and AI conversation.
@@ -261,6 +261,9 @@ Your PC has only Windows' Balanced plan and uses the **Power mode** slider inste
 **App updates says winget is not on this PC, or asks me to accept an agreement.**
 winget comes with Windows 11 and with **App Installer** from the Microsoft Store on Windows 10. The first time, winget may ask you to accept the Microsoft Store source agreement: open Command Prompt, type `winget upgrade`, read it and answer **Y**, then press **Check now**. PCDoctor never accepts it for you.
 
+**Search inside files does not find a file I know is there.**
+Windows only indexes some places (your user folders by default) and only the file types it has filters for; PDFs need a PDF filter, which most PCs have. If the panel says a folder is not indexed, press **Choose what Windows indexes** and add it; Windows needs a while to index new places.
+
 **Is PCDoctor free?** Yes, free to download and use.
 
 **Does it work on Mac, Linux or phones?** Not yet. Tell us if you want it: [Suggest a feature](https://github.com/dharmsahu-hash/pcdoctor-releases/issues/new?template=feature-request.yml).
@@ -291,6 +294,8 @@ If PCDoctor is in the tray, right-click its icon and choose **Quit PCDoctor** fi
 
 **Reminders and notifications (0.12.0).** `reminders.rs` stores each reminder's first local wall time and repeat; the next time is worked out with chrono in local time (month ends clamped to the last day, a time skipped by a clock change comes an hour later, a repeated one the first time). A thread checks every 30 s; a missed reminder fires once. Alerts reuse the Dashboard's drive rule and the `heat:slowed` advice, take Windows' uptime for the restart alert, start 1 minute after launch and are limited to once per 24 hours each. Notifications go to the window as an event and, when it is not shown, to Windows through Tauri's notification plugin (AppUserModelID of the installed app). Reminder text stays on this PC: never in reports, logs or anything given to the AI.
 
+**Search inside files (0.17.0).** `contents.rs` runs one hidden PowerShell call per search that queries Windows Search's `SystemIndex` through the `Search.CollatorDSO` OLE DB provider (`CONTAINS(*, '"word*" AND …')`, top 100 by rank, files only). Words are reduced to letters, digits, `-`, `_` and `.` and passed in an environment variable, never pasted into the script. Nothing is asked while the switch is off (tested); files are never opened and no second index is built; results stay in memory, on screen only, never saved or given to the AI. One `SCOPE='file:<folder>'` probe per My Library folder names the folders Windows does not index. On the test PC: 36 files for one word in 0.6 s.
+
 **App updates (0.16.0).** `winget.rs` runs Microsoft's winget (the WindowsApps alias, hidden) only while **Check which apps have newer versions** is on; a test proves no winget process starts while it is off. Listing: `winget upgrade --disable-interactivity`, read by the positions of the heading words (any language). Updating one app from the last list, after Update and Confirm: `winget upgrade --id <Id> --exact --silent --disable-interactivity --accept-package-agreements`. PCDoctor never accepts winget's source agreement for you. Activity notes each update without Undo.
 
 **Modes (0.15.0).** `power.rs` runs Windows' own `powercfg.exe` from System32 (`/list`, `/setactive <GUID>`), hidden and without administrator rights; plans are read by GUID, so any language works. Gaming → High performance (or Ultimate Performance), Work and Watching → Balanced, Battery → Power saver. It switches only to a plan the PC lists, checks Windows took it, and notes the previous plan in Activity for Undo. On PCs with only Balanced (the Windows 11 Power mode slider, which only Settings may change), the card explains and opens `ms-settings:powersleep`; no undocumented APIs.
@@ -317,12 +322,12 @@ Links (KnowledgeWala, TeacherCircle, feedback, contact) open in your browser onl
 
 **Data on disk.** `%LOCALAPPDATA%\com.knowledgewala.pcdoctor\`: `pcdoctor.db` (reminders and the last 50 notifications; history every 5 minutes while open or in the tray, including graphics card use, temperatures and minutes slowed down to stay cool, kept 90 days; My Library index; duplicate-search fingerprints (path, size, date and a BLAKE3 hash, forgotten after 30 days unseen), chosen folders and last results; activity log, 90 days), `ai\` (engine, model, `conversation.json` with the last 100 messages, `pc-context.md`, `insight.json`, `online-ai.json`), `update.json`. Own-service keys are stored in Windows Credential Manager (service name "PCDoctor online AI"). Before anything reaches an AI, the Windows user name and email-like strings are masked.
 
-**Quality.** Each release passes `npm audit`, TypeScript checks, 176 screen tests, 237 Rust unit tests and 4 network-guard tests, `cargo clippy -D warnings` and `cargo audit` in CI, plus real-PC tests on Windows 11 with the real AI, Recycle Bin and event log.
+**Quality.** Each release passes `npm audit`, TypeScript checks, 179 screen tests, 242 Rust unit tests and 4 network-guard tests, `cargo clippy -D warnings` and `cargo audit` in CI, plus real-PC tests on Windows 11 with the real AI, Recycle Bin and event log.
 
 **Verify your download.** Compare the SHA-256 shown on the release page with:
 
 ```
-certutil -hashfile PCDoctor_0.16.0_x64-setup.exe SHA256
+certutil -hashfile PCDoctor_0.17.0_x64-setup.exe SHA256
 ```
 
 **Licences.** PCDoctor is free to use under its licence agreement (shown in About). Third-party notices (Tauri, React, llama.cpp, Qwen and others) are listed in full in the app's About screen.
