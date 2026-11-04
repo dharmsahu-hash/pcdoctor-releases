@@ -54,7 +54,7 @@ PCDoctor looks at your PC, explains what it finds in one simple sentence, and of
 ## 3. Install in 1 minute
 
 1. Open the **[Releases page](https://github.com/dharmsahu-hash/pcdoctor-releases/releases/latest)**.
-2. Under **Assets**, click **`PCDoctor_0.23.1_x64-setup.exe`** (about 5 MB) to download it.
+2. Under **Assets**, click **`PCDoctor_0.23.2_x64-setup.exe`** (about 5 MB) to download it.
 3. Double-click the downloaded file.
 4. If Windows shows **"Windows protected your PC"**, click **More info**, then **Run anyway**. This message appears for new apps that are not yet code-signed; it is expected.
 5. Click **Next**, **Install**, **Finish**. No administrator password is needed.
@@ -129,6 +129,8 @@ To stop using your own service, choose **Built-in AI** under "Who answers your q
 - "What are my biggest videos?"
 - "Which programs crashed this week?"
 - "What is my IP address?" or "How much memory can this laptop take?"
+
+**Windows Smart App Control.** If Smart App Control is on in Windows, it may stop the built-in AI, because PCDoctor's AI engine is not code-signed yet. **Settings → AI assistant** tells you before you download it, and if Windows does stop the engine, PCDoctor says so in plain words instead of "did not start in time". PCDoctor itself and **My own AI service** keep working. Please keep Smart App Control on; it protects your PC. A signed engine is planned.
 
 AI answers are suggestions and can be wrong. The AI can never change your PC by itself (see the next section).
 
@@ -319,6 +321,9 @@ Click **More info**, then **Run anyway**. New apps show this until they are code
 **The Built-in AI tick box is greyed out.**
 Your PC has less than 6 GB of memory. Use **My own AI service** instead, or use PCDoctor without AI.
 
+**PCDoctor says Smart App Control (or a security policy) stopped the AI engine.**
+Windows refused to run the engine, because it is not code-signed yet. Everything else in PCDoctor works. For AI answers now, choose **My own AI service** in **Settings → AI assistant**. Please don't turn Smart App Control off for PCDoctor. If it says a security policy did it, the PC is managed (for example by work or school); ask whoever manages it.
+
 **The AI download stopped or failed.**
 Check your internet connection, untick and tick **Built-in AI** again. Each file is checked against a fixed fingerprint, so a broken download is never used.
 
@@ -432,6 +437,8 @@ If PCDoctor is in the tray, right-click its icon and choose **Quit PCDoctor** fi
 
 **AI engine and screen choices (0.23.1).** The local AI engine (llama-server) is put in a Windows job object with kill-on-close, and PCDoctor holds the only handle, so Windows ends the engine whenever PCDoctor's process ends, even after a crash or End task (measured: gone 1.1 s after PCDoctor was ended). At start, and before a new engine starts, any engine running from PCDoctor's own `ai` folder that is not the current one is stopped. Screen choices (welcome message, smaller menu, My Library collection, panel and sort, Thought for today, a skipped update) are kept in `pcdoctor.db` as short `pref.` settings instead of WebView2's browser storage, which an unclean Windows shutdown had left unreadable on our test PC; what browser storage still held is carried over once.
 
+**Smart App Control (0.23.2).** Its state is read from `HKLM\SYSTEM\CurrentControlSet\Control\CI\Policy` (`VerifiedAndReputablePolicyState`: 0 off, 1 on, 2 evaluation), no admin needed. When the engine fails, PCDoctor calls it a block only with evidence: Windows refused to start it (Application Control errors 4551 or 4580 to 4583, or 1260 for a software policy), it ended with `STATUS_INVALID_IMAGE_HASH` (a DLL refused), or the Code Integrity log (events 3077 or 3033, read with `wevtutil`) shows a file in the engine's folder blocked in the last 2 minutes. Smart App Control is named only when it is on; otherwise the message says a security policy. Only counts are kept; paths from the log are never saved, logged or given to the AI. The check took 117 ms on our test PC; a real block was not reproduced there (Smart App Control is off on it).
+
 **Search inside files (0.17.0).** `contents.rs` runs one hidden PowerShell call per search that queries Windows Search's `SystemIndex` through the `Search.CollatorDSO` OLE DB provider (`CONTAINS(*, '"word*" AND …')`, top 100 by rank, files only). Words are reduced to letters, digits, `-`, `_` and `.` and passed in an environment variable, never pasted into the script. Nothing is asked while the switch is off (tested); files are never opened and no second index is built; results stay in memory, on screen only, never saved or given to the AI. One `SCOPE='file:<folder>'` probe per My Library folder names the folders Windows does not index. On the test PC: 36 files for one word in 0.6 s.
 
 **Automation (0.18.0).**
@@ -482,12 +489,12 @@ Links (KnowledgeWala, TeacherCircle, feedback, contact) open in your browser onl
 
 **Data on disk.** `%LOCALAPPDATA%\com.knowledgewala.pcdoctor\`: `pcdoctor.db` (reminders and the last 50 notifications; history every 5 minutes while open or in the tray, including graphics card use, temperatures and minutes slowed down to stay cool, kept 90 days; My Library index; duplicate-search fingerprints (path, size, date and a BLAKE3 hash, forgotten after 30 days unseen), chosen folders and last results; activity log, 90 days), `ai\` (engine, model, `conversation.json` with the last 100 messages, `pc-context.md`, `insight.json`, `online-ai.json`), `update.json`. Own-service keys are stored in Windows Credential Manager (service name "PCDoctor online AI"). Before anything reaches an AI, the Windows user name and email-like strings are masked.
 
-**Quality.** Each release passes `npm audit`, TypeScript checks, 202 screen tests, 276 Rust unit tests and 4 network-guard tests, `cargo clippy -D warnings` and `cargo audit` on our build PC, plus real-PC tests on Windows 11 with the real AI, Recycle Bin and event log.
+**Quality.** Each release passes `npm audit`, TypeScript checks, 204 screen tests, 280 Rust unit tests and 4 network-guard tests, `cargo clippy -D warnings` and `cargo audit` on our build PC, plus real-PC tests on Windows 11 with the real AI, Recycle Bin and event log.
 
 **Verify your download.** Compare the SHA-256 shown on the release page with:
 
 ```
-certutil -hashfile PCDoctor_0.23.1_x64-setup.exe SHA256
+certutil -hashfile PCDoctor_0.23.2_x64-setup.exe SHA256
 ```
 
 **Licences.** PCDoctor is free to use under its licence agreement (shown in About). Third-party notices (Tauri, React, llama.cpp, Qwen and others) are listed in full in the app's About screen.
