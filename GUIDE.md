@@ -54,7 +54,7 @@ PCDoctor looks at your PC, explains what it finds in one simple sentence, and of
 ## 3. Install in 1 minute
 
 1. Open the **[Releases page](https://github.com/dharmsahu-hash/pcdoctor-releases/releases/latest)**.
-2. Under **Assets**, click **`PCDoctor_0.23.0_x64-setup.exe`** (about 5 MB) to download it.
+2. Under **Assets**, click **`PCDoctor_0.23.1_x64-setup.exe`** (about 5 MB) to download it.
 3. Double-click the downloaded file.
 4. If Windows shows **"Windows protected your PC"**, click **More info**, then **Run anyway**. This message appears for new apps that are not yet code-signed; it is expected.
 5. Click **Next**, **Install**, **Finish**. No administrator password is needed.
@@ -298,7 +298,7 @@ The server needs PCDoctor open or in the tray, with someone signed in. The link 
 
 ## 10. Updating, and keeping your data
 
-- **To update:** download the newest installer from the Releases page and run it over the old one. **Your history, My Library, AI files, conversation and settings are kept.**
+- **To update:** download the newest installer from the Releases page and run it over the old one. **Your history, My Library, AI files, conversation and settings are kept.** After updating to 0.23.1, the welcome message may show once more; press **Got it** and it stays closed.
 - **Get told about updates (optional):** in **Settings → Updates**, switch on **Check for updates**. Once a day PCDoctor asks GitHub whether a newer version exists and shows a **Download** button. It never installs anything by itself.
 
 ## 11. Your privacy in one minute
@@ -430,6 +430,8 @@ If PCDoctor is in the tray, right-click its icon and choose **Quit PCDoctor** fi
 
 **Reminders and notifications (0.12.0).** `reminders.rs` stores each reminder's first local wall time and repeat; the next time is worked out with chrono in local time (month ends clamped to the last day, a time skipped by a clock change comes an hour later, a repeated one the first time). A thread checks every 30 s; a missed reminder fires once. Alerts reuse the Dashboard's drive rule and the `heat:slowed` advice, take Windows' uptime for the restart alert, start 1 minute after launch and are limited to once per 24 hours each. Notifications go to the window as an event and, when it is not shown, to Windows through Tauri's notification plugin (AppUserModelID of the installed app). Reminder text stays on this PC: never in reports, logs or anything given to the AI.
 
+**AI engine and screen choices (0.23.1).** The local AI engine (llama-server) is put in a Windows job object with kill-on-close, and PCDoctor holds the only handle, so Windows ends the engine whenever PCDoctor's process ends, even after a crash or End task (measured: gone 1.1 s after PCDoctor was ended). At start, and before a new engine starts, any engine running from PCDoctor's own `ai` folder that is not the current one is stopped. Screen choices (welcome message, smaller menu, My Library collection, panel and sort, Thought for today, a skipped update) are kept in `pcdoctor.db` as short `pref.` settings instead of WebView2's browser storage, which an unclean Windows shutdown had left unreadable on our test PC; what browser storage still held is carried over once.
+
 **Search inside files (0.17.0).** `contents.rs` runs one hidden PowerShell call per search that queries Windows Search's `SystemIndex` through the `Search.CollatorDSO` OLE DB provider (`CONTAINS(*, '"word*" AND …')`, top 100 by rank, files only). Words are reduced to letters, digits, `-`, `_` and `.` and passed in an environment variable, never pasted into the script. Nothing is asked while the switch is off (tested); files are never opened and no second index is built; results stay in memory, on screen only, never saved or given to the AI. One `SCOPE='file:<folder>'` probe per My Library folder names the folders Windows does not index. On the test PC: 36 files for one word in 0.6 s.
 
 **Automation (0.18.0).**
@@ -480,12 +482,12 @@ Links (KnowledgeWala, TeacherCircle, feedback, contact) open in your browser onl
 
 **Data on disk.** `%LOCALAPPDATA%\com.knowledgewala.pcdoctor\`: `pcdoctor.db` (reminders and the last 50 notifications; history every 5 minutes while open or in the tray, including graphics card use, temperatures and minutes slowed down to stay cool, kept 90 days; My Library index; duplicate-search fingerprints (path, size, date and a BLAKE3 hash, forgotten after 30 days unseen), chosen folders and last results; activity log, 90 days), `ai\` (engine, model, `conversation.json` with the last 100 messages, `pc-context.md`, `insight.json`, `online-ai.json`), `update.json`. Own-service keys are stored in Windows Credential Manager (service name "PCDoctor online AI"). Before anything reaches an AI, the Windows user name and email-like strings are masked.
 
-**Quality.** Each release passes `npm audit`, TypeScript checks, 195 screen tests, 270 Rust unit tests and 4 network-guard tests, `cargo clippy -D warnings` and `cargo audit` on our build PC, plus real-PC tests on Windows 11 with the real AI, Recycle Bin and event log.
+**Quality.** Each release passes `npm audit`, TypeScript checks, 202 screen tests, 276 Rust unit tests and 4 network-guard tests, `cargo clippy -D warnings` and `cargo audit` on our build PC, plus real-PC tests on Windows 11 with the real AI, Recycle Bin and event log.
 
 **Verify your download.** Compare the SHA-256 shown on the release page with:
 
 ```
-certutil -hashfile PCDoctor_0.23.0_x64-setup.exe SHA256
+certutil -hashfile PCDoctor_0.23.1_x64-setup.exe SHA256
 ```
 
 **Licences.** PCDoctor is free to use under its licence agreement (shown in About). Third-party notices (Tauri, React, llama.cpp, Qwen and others) are listed in full in the app's About screen.
