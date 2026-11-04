@@ -54,7 +54,7 @@ PCDoctor looks at your PC, explains what it finds in one simple sentence, and of
 ## 3. Install in 1 minute
 
 1. Open the **[Releases page](https://github.com/dharmsahu-hash/pcdoctor-releases/releases/latest)**.
-2. Under **Assets**, click **`PCDoctor_0.22.0_x64-setup.exe`** (about 4 MB) to download it.
+2. Under **Assets**, click **`PCDoctor_0.23.0_x64-setup.exe`** (about 5 MB) to download it.
 3. Double-click the downloaded file.
 4. If Windows shows **"Windows protected your PC"**, click **More info**, then **Run anyway**. This message appears for new apps that are not yet code-signed; it is expected.
 5. Click **Next**, **Install**, **Finish**. No administrator password is needed.
@@ -79,7 +79,7 @@ PCDoctor opens, and you will find it in the Start menu under **PCDoctor**.
 | **Duplicates** | Finds files with exactly the same content. Under **Where to look**, press **Change** to add any folder or a whole drive (such as D:), remove one, or go back to the standard folders. Press **Find duplicates**; the search carries on in the background, and the last results show straight away next time. Tick the copies to delete yourself (Shift+click for a range), or let PCDoctor tick the extra copies in every group, keeping the suggested, newest or oldest one; then **Delete selected**. **The last copy can never be deleted.** |
 | **My Library** | Every PDF, document, video, photo, music file, archive and installer on your drives in ready-made collections (or your own). **Search inside files** (off until you switch it on) finds files by words inside them, using the index Windows already keeps. Search by name, open, show in folder, or delete (to the Recycle Bin). Tick several files (Shift+click for a range) to delete them together. In your own collections, **Bigger than (MB)** takes up to 10,000,000 MB and **Changed in the last (days)** up to 36,500 days, digits only. |
 | **Apps** | **App updates** (off until you switch it on): lists apps with newer versions through Microsoft's winget, with **Update** after you confirm; an update cannot be undone. Installed apps labelled **Remove**, **Update** or **Keep**, and programs that start with Windows labelled **Stop at startup** or **Keep**, each with a reason. Buttons open the right Windows Settings page. |
-| **Automation** | Your own cleanup rules for chosen folders: which files (name patterns, age, size, keep the newest few), when (every few hours, day, week or month, once, or only on **Run now**) and what happens (**Preview only**, **Recycle Bin**, **quarantine**, or **Delete permanently** once you allow it in **Automation settings**). Rules can take files or whole folders, and can run even while PCDoctor is closed once you switch that on (0.20.0). **Preview** shows exactly which files a rule would move before it can move any. Each rule has a **History** with **Put them back** for quarantined files. See section 9d. |
+| **Automation** | Your own cleanup rules for chosen folders: which files (name patterns, age, size, keep the newest few), when (every few hours, day, week or month, once, or only on **Run now**) and what happens (**Preview only**, **Recycle Bin**, **quarantine**, or **Delete permanently** once you allow it in **Automation settings**). Rules can take files or whole folders, and can run even while PCDoctor is closed once you switch that on (0.20.0). Rules can go to a Windows server as a signed file (0.22.0) or over a live link to a paired server (0.23.0). **Preview** shows exactly which files a rule would move before it can move any. Each rule has a **History** with **Put them back** for quarantined files. See section 9d. |
 | **Reminders** | Your own reminders (once, every day, week or month) with **Add reminder** at the top, and the PC care alerts with their switches. Also opens from the bell's **Reminder settings** and **Settings → Open Reminders**. |
 | **Activity** | Everything PCDoctor moved to the Recycle Bin (including by an automation rule) or stopped starting with Windows in the last 90 days, and each time you switched **Start PCDoctor with Windows** on or off, with **Undo**. |
 | **Your data** | Everything PCDoctor keeps on your PC (history, My Library list, activity log, automation history, duplicate fingerprints, reminders and notifications, AI conversation), how much and why, with a **Delete** for each part and **Keep my AI conversation**. Open it from the privacy line at the top of every screen. |
@@ -273,6 +273,29 @@ Rules that delete permanently need that setting on **on the server**, and the se
 
 A newer file from the same PC changes only that PC's rules; the server's own rules are never touched. **Untrust** keeps that PC's rules as the server's own, or removes them. To see what ran, use **History → Export…** on the server.
 
+## 9f. Paired servers (live link)
+
+**New in 0.23.0.** Work with a server's rules from your own PC over your network: see its rules and history, press **Run now**, or send it a rule. It is off until you switch it on at the server. Install 0.23.0 on both.
+
+**On the server**
+1. In **Automation → Paired servers (live link)**, press **Show**.
+2. Switch on **Accept connections from paired PCs** (port 47820 unless you change it). If Windows asks, allow PCDoctor on **private networks** only.
+3. Press **Allow pairing for 5 minutes**.
+
+**On your PC**
+1. Write the server's name or address and press **Pair…**. A 6-digit code appears.
+2. On the server, the same code appears with your PC's name. If it matches, press **Approve (View)**.
+3. Back on your PC, press **The codes match**.
+
+**What a paired PC may do** (set on the server for each PC):
+- **View:** the server's rules and history. Every new PC starts here.
+- **Run:** also **Run now** and **Cancel**.
+- **Manage:** also **Preview there** and **Save** a rule.
+
+A rule that deletes permanently can only be made on the server itself, and no server setting can be changed from another PC. Both sides list every request. **Unpair** on either side ends the link at once. If the server does not answer, PCDoctor says so and does not try again by itself.
+
+The server needs PCDoctor open or in the tray, with someone signed in. The link is meant for your own network; to reach a server over the internet, use your own VPN.
+
 ## 10. Updating, and keeping your data
 
 - **To update:** download the newest installer from the Releases page and run it over the old one. **Your history, My Library, AI files, conversation and settings are kept.**
@@ -284,7 +307,7 @@ A newer file from the same PC changes only that PC's rules; the server's own rul
 
 - PCDoctor reads how your PC is running (program names, memory, processor, disk space) and, for My Library, the names, sizes and dates of your files. **It never opens your files to read them** (Search inside files, if you switch it on, asks the index Windows already keeps, and its results stay on screen), and never reads your browser, emails, chats or passwords.
 - **No account, no tracking, no ads, no telemetry.** We cannot see how many people use PCDoctor.
-- PCDoctor goes online only for things you switch on: the one-time AI download, the daily update check, and your own AI service if you set one up.
+- PCDoctor goes online only for things you switch on: the one-time AI download, the daily update check, your own AI service if you set one up, and the live link to servers you paired yourself (0.23.0).
 - **Settings → Delete everything PCDoctor saved** wipes its history, My Library list and AI conversation.
 - The full privacy policy is in the app under **About**.
 
@@ -360,7 +383,16 @@ The task that runs your automation rules while PCDoctor is closed, added when yo
 No. You copy the files yourself (USB stick, Remote Desktop, your own shared folder). The server checks the signature, that it trusts your PC, that the file is for its own name and that it is new, and runs the rules with its own safety checks.
 
 **I lost my PC or reinstalled Windows. What about my servers?**
-On each server, **Untrust** the old PC. Then save the new PC's key and trust it there.
+On each server, **Untrust** the old PC (rule files) and **Unpair** it (live link). Then trust or pair the new PC there.
+
+**Pair… says the server is not answering.**
+On the server, check that PCDoctor is open or in the tray, that **Accept connections from paired PCs** is on, that you used the same port, and that Windows Firewall allows PCDoctor on private networks. Then press **Allow pairing for 5 minutes** and try again.
+
+**The codes on the two screens are different.**
+Do not approve. Something between the two PCs is not what it seems; press **Decline** on the server.
+
+**Can someone else connect to my server?**
+Only PCs you paired by comparing the code and pressing **Approve (View)**. Anyone else is turned away before anything they send is read.
 
 **Can I get back files an automation rule deleted permanently?**
 No. PCDoctor and the Recycle Bin cannot bring them back; only your own backup can. That is why the setting is off until you allow it, and each rule asks you to type its name.
@@ -414,6 +446,11 @@ If PCDoctor is in the tray, right-click its icon and choose **Quit PCDoctor** fi
   - **The file:** a `.pcdrules` holds the payload as JSON text (server name, sender, created time, a sequence number, the rules) and a signature over those exact bytes.
   - **The server** keeps trusted keys and the last sequence per key. It checks the signature, trust, its own computer name and the sequence, then previews each rule through its own guard. It applies all or nothing in one transaction.
   - **Ownership:** rules carry the sender's key, so a later file changes or removes only those.
+- **Live link (0.23.0):** `remote.rs`, the one place PCDoctor accepts connections, and only while the switch is on.
+  - **TLS:** mutual TLS 1.3 only (rustls 0.23 with aws-lc-rs). Each PC makes its own certificate (rcgen, ECDSA P-256); the private key is kept in Windows Credential Manager. There is no certificate authority: each side pins the other's SHA-256 certificate fingerprint at pairing, and the 6-digit code is derived from both fingerprints.
+  - **Refusals:** an unpaired peer is dropped after the handshake, before anything it sends is read; while pairing is open only a pairing request is read.
+  - **Messages:** length-prefixed JSON (1 MB limit) from a fixed list: hello, rules, history, preview, save rule, run now, cancel. There is no command, file-content or settings message; delete-permanently rules are refused. Roles: View, Run, Manage.
+  - **Logs and limits:** both sides log every request with the peer's name and fingerprint. At most 4 connections at once. Idle CPU while listening on the test PC: 0.14% of the processor.
 - **History (0.21.0):** `Filter` (rule, status or "problems", from/to, name text) drives `find_runs`/`find_files`; name search is `LIKE … ESCAPE '\'` with `%`, `_` and `\` taken literally. `export` writes runs only (counts and sizes) unless paths are asked for; CSV quotes fields with commas, quotes or line breaks and prefixes fields starting with `= + - @` with `'`. Retention: lib_meta `auto_keep_days` (30/90/365), pruned at once and after each run; unrestored quarantine records are kept.
 - **Closed-PC runs (0.20.0):** `schedtask.rs` creates a per-user task with `schtasks /Create /XML` (InteractiveToken, LeastPrivilege, PT15M repetition, StartWhenAvailable, IgnoreNew, priority 7, PT2H limit) starting `pcdoctor.exe --run-due-rules`, which runs due rules before any window is built and exits. `app.lock` (held while PCDoctor is open) makes it do nothing; `rules.lock` makes the app and the task take turns. Activity kind `automationTask` with Undo. The uninstall hook deletes the task on a real uninstall.
 
@@ -443,12 +480,12 @@ Links (KnowledgeWala, TeacherCircle, feedback, contact) open in your browser onl
 
 **Data on disk.** `%LOCALAPPDATA%\com.knowledgewala.pcdoctor\`: `pcdoctor.db` (reminders and the last 50 notifications; history every 5 minutes while open or in the tray, including graphics card use, temperatures and minutes slowed down to stay cool, kept 90 days; My Library index; duplicate-search fingerprints (path, size, date and a BLAKE3 hash, forgotten after 30 days unseen), chosen folders and last results; activity log, 90 days), `ai\` (engine, model, `conversation.json` with the last 100 messages, `pc-context.md`, `insight.json`, `online-ai.json`), `update.json`. Own-service keys are stored in Windows Credential Manager (service name "PCDoctor online AI"). Before anything reaches an AI, the Windows user name and email-like strings are masked.
 
-**Quality.** Each release passes `npm audit`, TypeScript checks, 194 screen tests, 267 Rust unit tests and 4 network-guard tests, `cargo clippy -D warnings` and `cargo audit` in CI, plus real-PC tests on Windows 11 with the real AI, Recycle Bin and event log.
+**Quality.** Each release passes `npm audit`, TypeScript checks, 195 screen tests, 270 Rust unit tests and 4 network-guard tests, `cargo clippy -D warnings` and `cargo audit` on our build PC, plus real-PC tests on Windows 11 with the real AI, Recycle Bin and event log.
 
 **Verify your download.** Compare the SHA-256 shown on the release page with:
 
 ```
-certutil -hashfile PCDoctor_0.22.0_x64-setup.exe SHA256
+certutil -hashfile PCDoctor_0.23.0_x64-setup.exe SHA256
 ```
 
 **Licences.** PCDoctor is free to use under its licence agreement (shown in About). Third-party notices (Tauri, React, llama.cpp, Qwen and others) are listed in full in the app's About screen.
